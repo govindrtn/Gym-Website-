@@ -38,6 +38,41 @@
   animation: themePanelIn 180ms ease both;
 }
 
+.theme-customizer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: rgb(2 6 23 / 0.68);
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: themeModalIn 180ms ease both;
+}
+
+.theme-customizer-panel-modal {
+  position: relative;
+  inset: auto;
+  width: min(32rem, 100%);
+  max-height: calc(100svh - 2rem);
+  border-radius: calc(var(--radius) + 0.35rem);
+}
+
+.theme-customizer-panel-modal .theme-customizer-heading {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  background: color-mix(in oklab, var(--popover) 94%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.theme-customizer-close {
+  color: var(--foreground);
+}
+
 .dark .theme-customizer-panel {
   border-color: rgb(255 255 255 / 0.11);
   background:
@@ -482,8 +517,18 @@
   }
 }
 
+@keyframes themeModalIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 1024px) {
-  .theme-customizer-panel {
+  .theme-customizer-panel:not(.theme-customizer-panel-modal) {
     right: 0;
     left: 0;
     width: 100%;
@@ -492,6 +537,17 @@
 }
 
 @media (max-width: 480px) {
+  .theme-customizer-modal {
+    place-items: end center;
+    padding: 0.5rem;
+  }
+
+  .theme-customizer-panel-modal {
+    width: 100%;
+    max-height: calc(100svh - 1rem);
+    border-radius: calc(var(--radius) + 0.5rem);
+  }
+
   .theme-customizer-heading,
   .theme-option-group {
     padding-inline: 0.75rem;
@@ -508,7 +564,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-customizer-panel {
+  .theme-customizer-panel,
+  .theme-customizer-modal {
     animation: none;
   }
 
