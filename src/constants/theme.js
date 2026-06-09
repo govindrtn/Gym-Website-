@@ -3,7 +3,7 @@ export const THEME_STORAGE_KEY = "silver-gym-theme-preferences";
 export const DEFAULT_THEME_PREFERENCES = {
   mode: "light",
   template: "metronic",
-  accent: "emerald",
+  accent: "amber",
   customAccent: "#22c55e",
   headerTabs: "pill",
 };
