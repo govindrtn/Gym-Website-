@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import { connectDatabase } from "./config/database.js";
-import { seedInitialData } from "./data/seedData.js";
+import { initializeDatabase } from "./data/initializeDatabase.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorMiddleware.js";
 import { authRoutes } from "./routes/authRoutes.js";
 import { coachRoutes } from "./routes/coachRoutes.js";
@@ -55,7 +55,7 @@ app.use(errorHandler);
 async function startServer() {
   try {
     await connectDatabase();
-    await seedInitialData();
+    await initializeDatabase();
 
     app.listen(PORT, HOST, () => {
       console.log(`Silver Gym API listening on ${HOST}:${PORT}`);

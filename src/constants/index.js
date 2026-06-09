@@ -1,4 +1,4 @@
-export { AUTH_STORAGE_KEY, DEMO_ACCOUNTS, USER_ROLES } from "./auth";
+export { AUTH_STORAGE_KEY, USER_ROLES } from "./auth";
 export { COLORS } from "./colors";
 export { FONTS } from "./fonts";
 export {

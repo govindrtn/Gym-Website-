@@ -73,7 +73,7 @@ function ForgotPasswordPage() {
                     type="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    placeholder="admin@silvergym.com"
+                    placeholder="you@example.com"
                     required
                   />
                 </div>

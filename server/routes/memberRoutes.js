@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { USER_ROLES } from "../constants/auth.js";
-import { demoMembers } from "../data/seedData.js";
 import { requireAuth, requireRole } from "../middleware/authMiddleware.js";
 import { Member } from "../models/Member.js";
 import { createMembershipDates } from "../utils/dateUtils.js";
@@ -118,19 +117,6 @@ router.delete("/:id", requireRole(USER_ROLES.ADMIN), async (request, response, n
 
     return response.json({
       member: cleanDocument(member),
-    });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-router.post("/reset-demo", requireRole(USER_ROLES.ADMIN), async (request, response, next) => {
-  try {
-    await Member.deleteMany({});
-    const members = await Member.insertMany(demoMembers);
-
-    return response.json({
-      members: members.map(cleanDocument),
     });
   } catch (error) {
     return next(error);

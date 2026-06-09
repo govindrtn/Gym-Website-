@@ -89,15 +89,6 @@ const gymApi = {
     return response.member;
   },
 
-  async resetDemoMembers(token) {
-    const response = await apiRequest("/members/reset-demo", {
-      method: "POST",
-      token,
-    });
-
-    return response.members || [];
-  },
-
   async getCoaches(token) {
     const response = await apiRequest("/coaches", { token });
 

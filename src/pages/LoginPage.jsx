@@ -1,11 +1,4 @@
-import { useState } from "react";
-import {
-  ArrowRight,
-  Dumbbell,
-  LockKeyhole,
-  ShieldCheck,
-  UserRound,
-} from "lucide-react";
+import { ArrowRight, LockKeyhole } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,27 +11,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { BrandWordmark } from "@/components/site/BrandWordmark";
-import { DEMO_ACCOUNTS, USER_ROLES } from "@/constants";
 import { APP_ROUTES } from "@/routes";
 import "./LoginPage.css";
 
-const roleContent = {
-  [USER_ROLES.ADMIN]: {
-    title: "Admin Control",
-    detail: "Members, attendance, fees, reports and front-desk actions.",
-    icon: ShieldCheck,
-  },
-  [USER_ROLES.USER]: {
-    title: "Member Access",
-    detail:
-      "Training, timetable, coaches, plans, enquiry and motivation content.",
-    icon: UserRound,
-  },
-};
-
 function LoginPage({ loginError, onLogin }) {
-  const [selectedAccount, setSelectedAccount] = useState(DEMO_ACCOUNTS[0]);
-
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -46,14 +22,6 @@ function LoginPage({ loginError, onLogin }) {
     onLogin({
       email: String(formData.get("email") ?? ""),
       password: String(formData.get("password") ?? ""),
-    });
-  }
-
-  function handleDemoLogin(account) {
-    setSelectedAccount(account);
-    onLogin({
-      email: account.email,
-      password: account.password,
     });
   }
 
@@ -76,36 +44,6 @@ function LoginPage({ loginError, onLogin }) {
               dashboard, tabs aur actions role ke hisaab se change honge.
             </p>
 
-            <div className="login-role-grid">
-              {DEMO_ACCOUNTS.map((account) => {
-                const RoleIcon = roleContent[account.role].icon;
-
-                return (
-                  <button
-                    key={account.role}
-                    type="button"
-                    className={
-                      selectedAccount.role === account.role
-                        ? "login-role-card is-active"
-                        : "login-role-card"
-                    }
-                    onClick={() => setSelectedAccount(account)}
-                  >
-                    <span className="login-role-icon">
-                      <RoleIcon className="size-4" />
-                    </span>
-                    <span>
-                      <span className="login-role-title">
-                        {roleContent[account.role].title}
-                      </span>
-                      <span className="login-role-detail">
-                        {roleContent[account.role].detail}
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
           <Card className="login-card">
@@ -113,7 +51,7 @@ function LoginPage({ loginError, onLogin }) {
               <CardHeading>
                 <CardTitle className="pt-2">Login to dashboard</CardTitle>
                 <CardDescription>
-                  Demo: {selectedAccount.email} / {selectedAccount.password}
+                  Use your registered Silver Gym account.
                 </CardDescription>
               </CardHeading>
               <div className="login-lock">
@@ -122,7 +60,6 @@ function LoginPage({ loginError, onLogin }) {
             </CardHeader>
             <CardContent>
               <form
-                key={selectedAccount.role}
                 className="grid gap-4"
                 onSubmit={handleSubmit}
               >
@@ -135,7 +72,6 @@ function LoginPage({ loginError, onLogin }) {
                     name="email"
                     type="email"
                     placeholder="Email"
-                    defaultValue={selectedAccount.email}
                     autoComplete="email"
                     required
                   />
@@ -149,7 +85,6 @@ function LoginPage({ loginError, onLogin }) {
                     name="password"
                     type="password"
                     placeholder="Password"
-                    defaultValue={selectedAccount.password}
                     autoComplete="current-password"
                     required
                   />
@@ -163,22 +98,6 @@ function LoginPage({ loginError, onLogin }) {
                   <ArrowRight />
                 </Button>
               </form>
-
-              <div className="login-demo-actions">
-                {DEMO_ACCOUNTS.map((account) => (
-                  <Button
-                    key={account.role}
-                    type="button"
-                    variant="outline"
-                    onClick={() => handleDemoLogin(account)}
-                  >
-                    {account.role === USER_ROLES.ADMIN
-                      ? "Login as Admin"
-                      : "Login as User"}
-                    <Dumbbell />
-                  </Button>
-                ))}
-              </div>
             </CardContent>
           </Card>
         </div>

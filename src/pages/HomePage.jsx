@@ -280,7 +280,7 @@ function HomePage({ currentUser, members }) {
                 </CardTitle>
                 <CardDescription>
                   {isAdmin
-                    ? "Live member entry status from local storage."
+                    ? "Live member entry status from the database."
                     : "Your public member sections are ready."}
                 </CardDescription>
               </CardHeading>

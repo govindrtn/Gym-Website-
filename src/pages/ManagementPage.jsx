@@ -6,7 +6,6 @@ function ManagementPage({
   removeMember,
   toggleAttendance,
   markDuePaid,
-  resetDemoData,
 }) {
   return (
     <ManagementSection
@@ -15,7 +14,6 @@ function ManagementPage({
       removeMember={removeMember}
       toggleAttendance={toggleAttendance}
       markDuePaid={markDuePaid}
-      resetDemoData={resetDemoData}
     />
   );
 }

@@ -35,7 +35,6 @@ function AppRoutingSetup({
   removeCoach,
   toggleAttendance,
   markDuePaid,
-  resetDemoData,
 }) {
   function requireAuth(element, allowedRoles) {
     if (!currentUser) {
@@ -106,7 +105,6 @@ function AppRoutingSetup({
             removeMember={removeMember}
             toggleAttendance={toggleAttendance}
             markDuePaid={markDuePaid}
-            resetDemoData={resetDemoData}
           />,
           [USER_ROLES.ADMIN],
         )}

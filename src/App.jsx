@@ -6,8 +6,6 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 import { AUTH_STORAGE_KEY } from "@/constants";
 import {
   brand,
-  coaches as initialCoaches,
-  gymMembers,
   plans,
   schedule,
 } from "@/data/siteData";
@@ -26,8 +24,6 @@ import {
   createWhatsAppUrl,
 } from "@/utils/whatsapp";
 
-const MEMBER_STORAGE_KEY = "silver-gym-members";
-const COACH_STORAGE_KEY = "silver-gym-coaches";
 const LEGACY_PLAN_MAP = {
   Starter: "1 Month",
   Performance: "3 Month",
@@ -74,35 +70,6 @@ function normalizeMember(member, index = 0) {
   };
 }
 
-function createLocalMember(currentMembers, memberDetails) {
-  const nextMemberNumber =
-    currentMembers.reduce((maxNumber, member) => {
-      const memberNumber = Number(member.id.replace("sg-", ""));
-      return Number.isFinite(memberNumber)
-        ? Math.max(maxNumber, memberNumber)
-        : maxNumber;
-    }, 100) + 1;
-  const selectedPlanData = plans.find(
-    (plan) => plan.name === memberDetails.plan,
-  );
-  const planDueAmount = Number(selectedPlanData?.price ?? 0);
-  const membershipDates = createMembershipDates(selectedPlanData?.months ?? 1);
-
-  return {
-    id: `sg-${nextMemberNumber}`,
-    name: memberDetails.name,
-    plan: memberDetails.plan,
-    phone: memberDetails.phone,
-    address: memberDetails.address,
-    trainerRequired: memberDetails.trainerRequired,
-    ...membershipDates,
-    lastVisit: "New member",
-    checkedIn: false,
-    dueAmount: planDueAmount,
-    dueDate: "New",
-  };
-}
-
 function normalizeCoach(coach, index = 0) {
   return {
     id: coach.id || `coach-${Date.now()}-${index}`,
@@ -111,46 +78,6 @@ function normalizeCoach(coach, index = 0) {
     focus: coach.focus,
     initials: coach.initials || getInitials(coach.name),
   };
-}
-
-function getDemoMembers() {
-  return gymMembers.map((member, index) => normalizeMember(member, index));
-}
-
-function getStoredMembers() {
-  if (typeof window === "undefined") {
-    return getDemoMembers();
-  }
-
-  try {
-    const storedMembers = window.localStorage.getItem(MEMBER_STORAGE_KEY);
-    const parsedMembers = storedMembers ? JSON.parse(storedMembers) : null;
-
-    return Array.isArray(parsedMembers)
-      ? parsedMembers.map((member, index) => normalizeMember(member, index))
-      : getDemoMembers();
-  } catch {
-    return getDemoMembers();
-  }
-}
-
-function getStoredCoaches() {
-  if (typeof window === "undefined") {
-    return initialCoaches;
-  }
-
-  try {
-    const storedCoaches = window.localStorage.getItem(COACH_STORAGE_KEY);
-    const parsedCoaches = storedCoaches ? JSON.parse(storedCoaches) : null;
-
-    if (!Array.isArray(parsedCoaches)) {
-      return initialCoaches;
-    }
-
-    return parsedCoaches.map((coach, index) => normalizeCoach(coach, index));
-  } catch {
-    return initialCoaches;
-  }
 }
 
 function getStoredAuthUser() {
@@ -187,8 +114,8 @@ function AppShell() {
   const [selectedPlan, setSelectedPlan] = useState("1 Month");
   const [submitted, setSubmitted] = useState(false);
   const [whatsappMessage, setWhatsappMessage] = useState("");
-  const [members, setMembers] = useState(getStoredMembers);
-  const [coaches, setCoaches] = useState(getStoredCoaches);
+  const [members, setMembers] = useState([]);
+  const [coaches, setCoaches] = useState([]);
   const [themePreferences, setThemePreferences] = useState(
     getStoredThemePreferences,
   );
@@ -267,14 +194,6 @@ function AppShell() {
   }, [currentUser?.token, navigate]);
 
   useEffect(() => {
-    window.localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify(members));
-  }, [members]);
-
-  useEffect(() => {
-    window.localStorage.setItem(COACH_STORAGE_KEY, JSON.stringify(coaches));
-  }, [coaches]);
-
-  useEffect(() => {
     let cancelled = false;
 
     async function hydrateBackendData() {
@@ -300,7 +219,7 @@ function AppShell() {
         );
       } catch (error) {
         console.warn(
-          "Backend data sync unavailable. Using local cached data.",
+          "Backend data sync unavailable.",
           error,
         );
       }
@@ -476,216 +395,145 @@ function AppShell() {
     }
   }
 
-  function toggleAttendance(memberId) {
+  async function toggleAttendance(memberId) {
     const selectedMember = members.find((member) => member.id === memberId);
 
-    if (selectedMember) {
-      void syncGoogleSheetAction("attendance_updated", {
-        id: selectedMember.id,
-        name: selectedMember.name,
-        plan: selectedMember.plan,
-        checkedIn: !selectedMember.checkedIn,
-        lastVisit: selectedMember.checkedIn
-          ? selectedMember.lastVisit
-          : "Just now",
-      });
+    if (!currentUser?.token || !selectedMember) {
+      return false;
     }
 
-    setMembers((currentMembers) =>
-      currentMembers.map((member) =>
-        member.id === memberId
-          ? {
-              ...member,
-              checkedIn: !member.checkedIn,
-              lastVisit: member.checkedIn ? member.lastVisit : "Just now",
-            }
-          : member,
-      ),
-    );
+    try {
+      const updatedMember = await gymApi.toggleAttendance(
+        memberId,
+        currentUser.token,
+      );
 
-    if (currentUser?.token) {
-      void gymApi
-        .toggleAttendance(memberId, currentUser.token)
-        .then((updatedMember) => {
-          setMembers((currentMembers) =>
-            currentMembers.map((member) =>
-              member.id === updatedMember.id
-                ? normalizeMember(updatedMember)
-                : member,
-            ),
-          );
-        })
-        .catch((error) =>
-          console.warn("Backend attendance update failed", error),
-        );
+      setMembers((currentMembers) =>
+        currentMembers.map((member) =>
+          member.id === updatedMember.id ? normalizeMember(updatedMember) : member,
+        ),
+      );
+      void syncGoogleSheetAction("attendance_updated", updatedMember);
+      return true;
+    } catch (error) {
+      console.warn("Backend attendance update failed", error);
+      return false;
     }
   }
 
-  function markDuePaid(memberId) {
+  async function markDuePaid(memberId) {
     const selectedMember = members.find((member) => member.id === memberId);
 
-    if (selectedMember) {
+    if (!currentUser?.token || !selectedMember) {
+      return false;
+    }
+
+    try {
+      const updatedMember = await gymApi.markDuePaid(
+        memberId,
+        currentUser.token,
+      );
+
+      setMembers((currentMembers) =>
+        currentMembers.map((member) =>
+          member.id === updatedMember.id ? normalizeMember(updatedMember) : member,
+        ),
+      );
       void syncGoogleSheetAction("due_paid", {
-        id: selectedMember.id,
-        name: selectedMember.name,
-        plan: selectedMember.plan,
+        ...updatedMember,
         previousDueAmount: selectedMember.dueAmount,
         paidAt: new Date().toISOString(),
       });
-    }
-
-    setMembers((currentMembers) =>
-      currentMembers.map((member) =>
-        member.id === memberId
-          ? {
-              ...member,
-              dueAmount: 0,
-              dueDate: "Paid",
-            }
-          : member,
-      ),
-    );
-
-    if (currentUser?.token) {
-      void gymApi
-        .markDuePaid(memberId, currentUser.token)
-        .then((updatedMember) => {
-          setMembers((currentMembers) =>
-            currentMembers.map((member) =>
-              member.id === updatedMember.id
-                ? normalizeMember(updatedMember)
-                : member,
-            ),
-          );
-        })
-        .catch((error) => console.warn("Backend due update failed", error));
+      return true;
+    } catch (error) {
+      console.warn("Backend due update failed", error);
+      return false;
     }
   }
 
   async function addMember(memberDetails) {
-    if (currentUser?.token) {
-      try {
-        const savedMember = await gymApi.createMember(
-          memberDetails,
-          currentUser.token,
-        );
-        const normalizedMember = normalizeMember(savedMember);
-
-        setMembers((currentMembers) => [
-          normalizedMember,
-          ...currentMembers.filter(
-            (member) => member.id !== normalizedMember.id,
-          ),
-        ]);
-        void syncGoogleSheetAction("member_added", normalizedMember);
-        return;
-      } catch (error) {
-        console.warn("Backend member create failed. Saving locally.", error);
-      }
+    if (!currentUser?.token) {
+      return false;
     }
 
-    const nextMember = createLocalMember(members, memberDetails);
+    try {
+      const savedMember = await gymApi.createMember(
+        memberDetails,
+        currentUser.token,
+      );
+      const normalizedMember = normalizeMember(savedMember);
 
-    setMembers((currentMembers) => [nextMember, ...currentMembers]);
-    void syncGoogleSheetAction("member_added", nextMember);
+      setMembers((currentMembers) => [
+        normalizedMember,
+        ...currentMembers.filter((member) => member.id !== normalizedMember.id),
+      ]);
+      void syncGoogleSheetAction("member_added", normalizedMember);
+      return true;
+    } catch (error) {
+      console.warn("Backend member create failed", error);
+      return false;
+    }
   }
 
-  function removeMember(memberId) {
+  async function removeMember(memberId) {
     const selectedMember = members.find((member) => member.id === memberId);
 
-    setMembers((currentMembers) =>
-      currentMembers.filter((member) => member.id !== memberId),
-    );
-
-    if (selectedMember) {
-      void syncGoogleSheetAction("member_removed", selectedMember);
+    if (!currentUser?.token || !selectedMember) {
+      return false;
     }
 
-    if (currentUser?.token) {
-      void gymApi
-        .deleteMember(memberId, currentUser.token)
-        .catch((error) => console.warn("Backend member remove failed", error));
+    try {
+      await gymApi.deleteMember(memberId, currentUser.token);
+      setMembers((currentMembers) =>
+        currentMembers.filter((member) => member.id !== memberId),
+      );
+      void syncGoogleSheetAction("member_removed", selectedMember);
+      return true;
+    } catch (error) {
+      console.warn("Backend member remove failed", error);
+      return false;
     }
   }
 
   async function addCoach(coachDetails) {
-    if (currentUser?.token) {
-      try {
-        const savedCoach = await gymApi.createCoach(
-          coachDetails,
-          currentUser.token,
-        );
-        const normalizedCoach = normalizeCoach(savedCoach);
-
-        setCoaches((currentCoaches) => [
-          normalizedCoach,
-          ...currentCoaches.filter((coach) => coach.id !== normalizedCoach.id),
-        ]);
-        void syncGoogleSheetAction("coach_added", normalizedCoach);
-        return;
-      } catch (error) {
-        console.warn("Backend coach create failed. Saving locally.", error);
-      }
+    if (!currentUser?.token) {
+      return false;
     }
 
-    const nextCoach = {
-      id: `coach-${Date.now()}`,
-      name: coachDetails.name,
-      role: coachDetails.role,
-      focus: coachDetails.focus,
-      initials: getInitials(coachDetails.name),
-    };
+    try {
+      const savedCoach = await gymApi.createCoach(coachDetails, currentUser.token);
+      const normalizedCoach = normalizeCoach(savedCoach);
 
-    setCoaches((currentCoaches) => [nextCoach, ...currentCoaches]);
-    void syncGoogleSheetAction("coach_added", nextCoach);
+      setCoaches((currentCoaches) => [
+        normalizedCoach,
+        ...currentCoaches.filter((coach) => coach.id !== normalizedCoach.id),
+      ]);
+      void syncGoogleSheetAction("coach_added", normalizedCoach);
+      return true;
+    } catch (error) {
+      console.warn("Backend coach create failed", error);
+      return false;
+    }
   }
 
-  function removeCoach(coachId) {
+  async function removeCoach(coachId) {
     const selectedCoach = coaches.find((coach) => coach.id === coachId);
 
-    setCoaches((currentCoaches) =>
-      currentCoaches.filter((coach) => coach.id !== coachId),
-    );
+    if (!currentUser?.token || !selectedCoach) {
+      return false;
+    }
 
-    if (selectedCoach) {
+    try {
+      await gymApi.deleteCoach(coachId, currentUser.token);
+      setCoaches((currentCoaches) =>
+        currentCoaches.filter((coach) => coach.id !== coachId),
+      );
       void syncGoogleSheetAction("coach_removed", selectedCoach);
+      return true;
+    } catch (error) {
+      console.warn("Backend coach remove failed", error);
+      return false;
     }
-
-    if (currentUser?.token) {
-      void gymApi
-        .deleteCoach(coachId, currentUser.token)
-        .catch((error) => console.warn("Backend coach remove failed", error));
-    }
-  }
-
-  async function resetDemoData() {
-    if (currentUser?.token) {
-      try {
-        const backendDemoMembers = await gymApi.resetDemoMembers(
-          currentUser.token,
-        );
-        const normalizedMembers = backendDemoMembers.map((member, index) =>
-          normalizeMember(member, index),
-        );
-
-        setMembers(normalizedMembers);
-        void syncGoogleSheetAction("demo_reset", {
-          membersCount: normalizedMembers.length,
-          resetAt: new Date().toISOString(),
-        });
-        return;
-      } catch (error) {
-        console.warn("Backend demo reset failed. Resetting locally.", error);
-      }
-    }
-
-    const demoMembers = getDemoMembers();
-
-    setMembers(demoMembers);
-    void syncGoogleSheetAction("demo_reset", {
-      membersCount: demoMembers.length,
-      resetAt: new Date().toISOString(),
-    });
   }
 
   return (
@@ -724,7 +572,6 @@ function AppShell() {
           removeCoach={removeCoach}
           toggleAttendance={toggleAttendance}
           markDuePaid={markDuePaid}
-          resetDemoData={resetDemoData}
         />
       </main>
       <SiteFooter onNavigate={navigateTo} />

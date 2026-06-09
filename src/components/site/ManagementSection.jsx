@@ -4,7 +4,6 @@ import {
   Banknote,
   CalendarX,
   CheckCircle2,
-  RotateCcw,
   Search,
   Trash2,
   UserPlus,
@@ -65,7 +64,6 @@ function ManagementSection({
   removeMember,
   toggleAttendance,
   markDuePaid,
-  resetDemoData,
 }) {
   const [search, setSearch] = useState("");
   const [planStatusFilter, setPlanStatusFilter] = useState("all");
@@ -142,16 +140,21 @@ function ManagementSection({
     }));
   }
 
-  function handleAddMember(event) {
+  async function handleAddMember(event) {
     event.preventDefault();
 
-    addMember({
+    const saved = await addMember({
       name: memberForm.name.trim(),
       phone: memberForm.phone.trim(),
       address: memberForm.address.trim(),
       plan: memberForm.plan,
       trainerRequired: memberForm.trainerRequired === "yes",
     });
+
+    if (!saved) {
+      setMemberAdded(false);
+      return;
+    }
 
     setSearch(memberForm.name.trim());
     setPlanStatusFilter("all");
@@ -193,10 +196,6 @@ function ManagementSection({
             </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button variant="outline" onClick={resetDemoData}>
-                <RotateCcw />
-                Reset Demo
-              </Button>
               <Badge
                 variant="success"
                 appearance="light"

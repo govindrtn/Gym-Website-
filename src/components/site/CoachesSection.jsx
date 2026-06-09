@@ -35,14 +35,19 @@ function CoachesSection({ currentUser, coaches = [], addCoach, removeCoach }) {
     }));
   }
 
-  function handleAddCoach(event) {
+  async function handleAddCoach(event) {
     event.preventDefault();
 
-    addCoach({
+    const saved = await addCoach({
       name: coachForm.name.trim(),
       role: coachForm.role.trim(),
       focus: coachForm.focus.trim(),
     });
+
+    if (!saved) {
+      setCoachAdded(false);
+      return;
+    }
 
     setCoachForm(initialCoachForm);
     setCoachAdded(true);
@@ -169,7 +174,7 @@ function CoachesSection({ currentUser, coaches = [], addCoach, removeCoach }) {
               </form>
               {coachAdded && (
                 <div className="coach-added-message" role="status">
-                  Coach added. List local storage me save ho gayi.
+                  Coach added and saved to the database.
                 </div>
               )}
             </CardContent>

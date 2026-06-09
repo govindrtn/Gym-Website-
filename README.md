@@ -9,7 +9,7 @@ A complete React + Vite gym website for Silver Gym, built with a Metronic-inspir
 - Tailwind CSS 4
 - Node.js + Express API
 - MongoDB + Mongoose database
-- JWT auth with seeded admin/member demo accounts
+- JWT authentication with environment-based admin bootstrap
 - Metronic-style theme tokens
 - Reusable Button, Card, Badge, and Input components
 - Lucide icons
@@ -37,12 +37,15 @@ npm run dev:full
 - Backend API: `http://127.0.0.1:5000/api`
 - Health check: `http://127.0.0.1:5000/api/health`
 
-Demo login seed hoga:
+Fresh database par first admin create karne ke liye `.env` me ye values set karo:
 
 ```text
-admin@silvergym.com / admin123
-member@silvergym.com / member123
+ADMIN_NAME=Silver Gym Admin
+ADMIN_EMAIL=your-admin-email@example.com
+ADMIN_PASSWORD=minimum-8-character-password
 ```
+
+Members aur coaches demo seed nahi hote. Admin dashboard se add kiya gaya operational data MongoDB se load hota hai.
 
 ## Build
 
@@ -65,11 +68,11 @@ Deploy karne ke steps:
 1. MongoDB Atlas me free cluster banao, database user create karo, aur Network Access me Render ke liye `0.0.0.0/0` allow karo.
 2. Atlas connection string me password aur database name set karke `MONGODB_URI` ready karo.
 3. Render dashboard me `New > Blueprint` select karke ye GitHub repository connect karo.
-4. Blueprint deploy ke waqt `MONGODB_URI` enter karo. Baaki backend values `render.yaml` se configure hongi.
+4. Blueprint deploy ke waqt `MONGODB_URI`, `ADMIN_EMAIL`, aur `ADMIN_PASSWORD` enter karo. Baaki backend values `render.yaml` se configure hongi.
 5. GitHub repository me `Settings > Pages > Build and deployment > Source` ko `GitHub Actions` select karo.
 6. `main` branch push hone par `.github/workflows/deploy-pages.yml` frontend deploy karega.
 
-Render free service inactivity ke baad sleep ho sakta hai, isliye first API request/login me kuch seconds lag sakte hain. Demo forgot-password link response me expose hota hai; real production use se pehle email provider add karke `EXPOSE_RESET_LINK=false` karo.
+Render free service inactivity ke baad sleep ho sakta hai, isliye first API request/login me kuch seconds lag sakte hain. Forgot-password link response me expose hota hai; real production use se pehle email provider add karke `EXPOSE_RESET_LINK=false` karo.
 
 ## Backend API
 
@@ -82,13 +85,12 @@ Render free service inactivity ke baad sleep ho sakta hai, isliye first API requ
 - `PATCH /api/members/:id/attendance`
 - `PATCH /api/members/:id/due-paid`
 - `DELETE /api/members/:id`
-- `POST /api/members/reset-demo`
 - `GET /api/coaches`
 - `POST /api/coaches`
 - `DELETE /api/coaches/:id`
 - `POST /api/enquiries`
 
-Frontend backend unavailable hone par localStorage fallback use karega, so UI development block nahi hoti.
+Members aur coaches MongoDB-backed hain. Backend unavailable hone par operational changes save nahi honge.
 
 Development mode me forgot-password response reset link return karta hai, jo Forgot Password screen par show hota hai. Production me email provider connect karke `EXPOSE_RESET_LINK=false` rakho.
 
@@ -107,7 +109,7 @@ Client-specific default set karna ho to `DEFAULT_THEME_PREFERENCES` update karo.
 
 ## Google Sheet Sync
 
-Google Sheet URL abhi optional hai. URL nahi hoga to app localStorage par normal chalega.
+Google Sheet URL optional activity sync ke liye hai. Primary operational data MongoDB me save hota hai.
 
 1. Google Sheet create karo.
 2. Sheet me `Extensions > Apps Script` open karo.
@@ -122,7 +124,7 @@ VITE_GOOGLE_SHEET_WEBHOOK_URL=https://script.google.com/macros/s/YOUR_WEB_APP_ID
 ## Key Files
 
 - `src/App.jsx` - app state and section composition
-- `src/data/siteData.jsx` - brand, section, schedule, coach, and plan data
+- `src/data/siteData.jsx` - brand, marketing sections, schedule, and plan data
 - `src/components/site` - section-level website components and CSS
 - `src/constants` - shared colors and fonts constants
 - `src/services/gymApiService.js` - frontend API service for backend data
