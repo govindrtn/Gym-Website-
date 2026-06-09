@@ -50,6 +50,25 @@ member@silvergym.com / member123
 npm run build
 ```
 
+## Free Deployment
+
+Deployment setup repository me included hai:
+
+- Frontend: GitHub Pages at `https://govindrtn.github.io/Gym-Website-/`
+- Backend: Render at `https://silver-gym-api-govindrtn.onrender.com`
+- Database: MongoDB Atlas free cluster
+
+Deploy karne ke steps:
+
+1. MongoDB Atlas me free cluster banao, database user create karo, aur Network Access me Render ke liye `0.0.0.0/0` allow karo.
+2. Atlas connection string me password aur database name set karke `MONGODB_URI` ready karo.
+3. Render dashboard me `New > Blueprint` select karke ye GitHub repository connect karo.
+4. Blueprint deploy ke waqt `MONGODB_URI` enter karo. Baaki backend values `render.yaml` se configure hongi.
+5. GitHub repository me `Settings > Pages > Build and deployment > Source` ko `GitHub Actions` select karo.
+6. `main` branch push hone par `.github/workflows/deploy-pages.yml` frontend deploy karega.
+
+Render free service inactivity ke baad sleep ho sakta hai, isliye first API request/login me kuch seconds lag sakte hain. Demo forgot-password link response me expose hota hai; real production use se pehle email provider add karke `EXPOSE_RESET_LINK=false` karo.
+
 ## Backend API
 
 - `POST /api/auth/login`

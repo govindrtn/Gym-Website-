@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: silver-gym-api-govindrtn
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: RESET_TOKEN_EXPIRES_MINUTES
+        value: 15
+      - key: EXPOSE_RESET_LINK
+        value: true
+      - key: CLIENT_ORIGIN
+        value: https://govindrtn.github.io/Gym-Website-

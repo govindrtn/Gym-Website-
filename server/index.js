@@ -14,11 +14,12 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.SERVER_PORT || process.env.PORT || 5000;
+const HOST = process.env.HOST || "0.0.0.0";
 const allowedOrigins = [
-  process.env.CLIENT_ORIGIN,
+  ...(process.env.CLIENT_ORIGIN || "").split(","),
   "http://127.0.0.1:5173",
   "http://localhost:5173",
-].filter(Boolean);
+].map((origin) => origin.trim().replace(/\/$/, "")).filter(Boolean);
 
 app.use(
   cors({
@@ -55,8 +56,8 @@ async function startServer() {
     await connectDatabase();
     await seedInitialData();
 
-    app.listen(PORT, () => {
-      console.log(`Silver Gym API running on http://127.0.0.1:${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.log(`Silver Gym API listening on ${HOST}:${PORT}`);
     });
   } catch (error) {
     console.error("Unable to start Silver Gym API:", error.message);
