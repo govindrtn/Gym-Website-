@@ -68,7 +68,7 @@ Deploy karne ke steps:
 1. MongoDB Atlas me free cluster banao, database user create karo, aur Network Access me Render ke liye `0.0.0.0/0` allow karo.
 2. Atlas connection string me password aur database name set karke `MONGODB_URI` ready karo.
 3. Render dashboard me `New > Blueprint` select karke ye GitHub repository connect karo.
-4. Blueprint deploy ke waqt `MONGODB_URI`, `ADMIN_EMAIL`, aur `ADMIN_PASSWORD` enter karo. Baaki backend values `render.yaml` se configure hongi.
+4. Blueprint deploy ke waqt `MONGODB_URI` enter karo. Fresh database use kar rahe ho to Render Environment me `ADMIN_EMAIL` aur `ADMIN_PASSWORD` bhi add karo. Baaki backend values `render.yaml` se configure hongi.
 5. GitHub repository me `Settings > Pages > Build and deployment > Source` ko `GitHub Actions` select karo.
 6. `main` branch push hone par `.github/workflows/deploy-pages.yml` frontend deploy karega.
 
