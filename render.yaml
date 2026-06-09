@@ -20,4 +20,6 @@ services:
       - key: EXPOSE_RESET_LINK
         value: true
       - key: CLIENT_ORIGIN
+        value: https://govindrtn.github.io
+      - key: CLIENT_APP_URL
         value: https://govindrtn.github.io/Gym-Website-

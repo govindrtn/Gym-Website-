@@ -98,7 +98,11 @@ router.post("/forgot-password", async (request, response, next) => {
     });
 
     if (shouldExposeResetLink()) {
-      const clientOrigin = (process.env.CLIENT_ORIGIN || "http://127.0.0.1:5173")
+      const clientOrigin = (
+        process.env.CLIENT_APP_URL
+        || process.env.CLIENT_ORIGIN
+        || "http://127.0.0.1:5173"
+      )
         .split(",")[0]
         .trim()
         .replace(/\/$/, "");
