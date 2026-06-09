@@ -14,7 +14,14 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
+  CardTitle,
+} from "@/components/ui/card";
 import { CountingNumber } from "@/components/ui/counting-number";
 import { Input } from "@/components/ui/input";
 import { ProgressCircle } from "@/components/ui/progress";
@@ -33,18 +40,33 @@ const initialMemberForm = {
 };
 
 const trainerOptions = [
-  { label: "Yes, trainer chahiye", value: "yes", detail: "Coach guidance required" },
+  {
+    label: "Yes, trainer chahiye",
+    value: "yes",
+    detail: "Coach guidance required",
+  },
   { label: "No trainer", value: "no", detail: "Self training" },
 ];
 
 const planStatusOptions = [
   { label: "All plans", value: "all", detail: "Show every member" },
   { label: "Active", value: "active", detail: "Membership running" },
-  { label: "Expiring soon", value: "expiring", detail: "Expires within 7 days" },
+  {
+    label: "Expiring soon",
+    value: "expiring",
+    detail: "Expires within 7 days",
+  },
   { label: "Expired", value: "expired", detail: "Plan date is over" },
 ];
 
-function ManagementSection({ members, addMember, removeMember, toggleAttendance, markDuePaid, resetDemoData }) {
+function ManagementSection({
+  members,
+  addMember,
+  removeMember,
+  toggleAttendance,
+  markDuePaid,
+  resetDemoData,
+}) {
   const [search, setSearch] = useState("");
   const [planStatusFilter, setPlanStatusFilter] = useState("all");
   const [memberForm, setMemberForm] = useState(initialMemberForm);
@@ -53,9 +75,16 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
   const stats = useMemo(() => {
     const checkedIn = members.filter((member) => member.checkedIn).length;
     const pendingMembers = members.filter((member) => member.dueAmount > 0);
-    const expiredMembers = members.filter((member) => getMembershipStatus(member).value === "expired");
-    const totalDue = pendingMembers.reduce((sum, member) => sum + member.dueAmount, 0);
-    const attendanceRate = members.length ? Math.round((checkedIn / members.length) * 100) : 0;
+    const expiredMembers = members.filter(
+      (member) => getMembershipStatus(member).value === "expired",
+    );
+    const totalDue = pendingMembers.reduce(
+      (sum, member) => sum + member.dueAmount,
+      0,
+    );
+    const attendanceRate = members.length
+      ? Math.round((checkedIn / members.length) * 100)
+      : 0;
 
     return {
       checkedIn,
@@ -93,11 +122,17 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
       return searchedMembers;
     }
 
-    return searchedMembers.filter((member) => getMembershipStatus(member).value === planStatusFilter);
+    return searchedMembers.filter(
+      (member) => getMembershipStatus(member).value === planStatusFilter,
+    );
   }, [members, planStatusFilter, search]);
 
-  const pendingMembers = visibleMembers.filter((member) => member.dueAmount > 0);
-  const activeFilter = planStatusOptions.find((option) => option.value === planStatusFilter);
+  const pendingMembers = visibleMembers.filter(
+    (member) => member.dueAmount > 0,
+  );
+  const activeFilter = planStatusOptions.find(
+    (option) => option.value === planStatusFilter,
+  );
 
   function updateMemberForm(field, value) {
     setMemberAdded(false);
@@ -162,7 +197,11 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
                 <RotateCcw />
                 Reset Demo
               </Button>
-              <Badge variant="success" appearance="light" className="management-sync-badge">
+              <Badge
+                variant="success"
+                appearance="light"
+                className="management-sync-badge"
+              >
                 <CheckCircle2 className="size-3.5" />
                 {activeFilter?.label}
               </Badge>
@@ -194,8 +233,12 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
             <Card className="management-stat-card management-rate-card">
               <CardContent className="management-rate-content">
                 <div className="management-rate-copy">
-                  <div className="text-xs font-medium uppercase text-muted-foreground">Attendance rate</div>
-                  <div className="mt-2 text-2xl font-semibold">{stats.attendanceRate}%</div>
+                  <div className="text-xs font-medium uppercase text-muted-foreground">
+                    Attendance rate
+                  </div>
+                  <div className="mt-2 text-2xl font-semibold">
+                    {stats.attendanceRate}%
+                  </div>
                   <div className="management-rate-caption">
                     {stats.checkedIn}/{members.length || 0} checked in
                   </div>
@@ -218,8 +261,11 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
           <Card className="management-panel attendance-panel">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Attendance Management</CardTitle>
-                <CardDescription>Check members in/out and monitor plan expiry during front-desk entry.</CardDescription>
+                <CardTitle className="pt-2.5">Attendance Management</CardTitle>
+                <CardDescription>
+                  Check members in/out and monitor plan expiry during front-desk
+                  entry.
+                </CardDescription>
               </CardHeading>
               <Badge variant="primary" appearance="light">
                 {visibleMembers.length} members
@@ -257,8 +303,11 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
             <Card className="management-panel new-member-panel">
               <CardHeader>
                 <CardHeading>
-                  <CardTitle>Add New Member</CardTitle>
-                  <CardDescription>Name, contact, address, duration plan, and trainer preference.</CardDescription>
+                  <CardTitle className="pt-2.5">Add New Member</CardTitle>
+                  <CardDescription>
+                    Name, contact, address, duration plan, and trainer
+                    preference.
+                  </CardDescription>
                 </CardHeading>
                 <Badge variant="primary" appearance="light">
                   <UserPlus className="size-3.5" />
@@ -269,21 +318,32 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
                 <form className="new-member-form" onSubmit={handleAddMember}>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="management-label" htmlFor="member-name">Name</label>
+                      <label className="management-label" htmlFor="member-name">
+                        Name
+                      </label>
                       <Input
                         id="member-name"
                         value={memberForm.name}
-                        onChange={(event) => updateMemberForm("name", event.target.value)}
+                        onChange={(event) =>
+                          updateMemberForm("name", event.target.value)
+                        }
                         placeholder="Member name"
                         required
                       />
                     </div>
                     <div>
-                      <label className="management-label" htmlFor="member-phone">Contact number</label>
+                      <label
+                        className="management-label"
+                        htmlFor="member-phone"
+                      >
+                        Contact number
+                      </label>
                       <Input
                         id="member-phone"
                         value={memberForm.phone}
-                        onChange={(event) => updateMemberForm("phone", event.target.value)}
+                        onChange={(event) =>
+                          updateMemberForm("phone", event.target.value)
+                        }
                         placeholder="8878257808"
                         inputMode="tel"
                         required
@@ -292,11 +352,18 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
                   </div>
 
                   <div>
-                    <label className="management-label" htmlFor="member-address">Address</label>
+                    <label
+                      className="management-label"
+                      htmlFor="member-address"
+                    >
+                      Address
+                    </label>
                     <Input
                       id="member-address"
                       value={memberForm.address}
-                      onChange={(event) => updateMemberForm("address", event.target.value)}
+                      onChange={(event) =>
+                        updateMemberForm("address", event.target.value)
+                      }
                       placeholder="Member address"
                       required
                     />
@@ -322,7 +389,9 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
                         label="Trainer lena hai?"
                         value={memberForm.trainerRequired}
                         options={trainerOptions}
-                        onChange={(value) => updateMemberForm("trainerRequired", value)}
+                        onChange={(value) =>
+                          updateMemberForm("trainerRequired", value)
+                        }
                       />
                     </div>
                   </div>
@@ -334,7 +403,8 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
 
                   {memberAdded && (
                     <div className="member-added-message" role="status">
-                      New member added. Plan fee pending dues me add ho gayi aur expiry selected duration ke hisaab se set ho gayi.
+                      New member added. Plan fee pending dues me add ho gayi aur
+                      expiry selected duration ke hisaab se set ho gayi.
                     </div>
                   )}
                 </form>
@@ -344,7 +414,7 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
             <Card className="management-panel dues-panel">
               <CardHeader>
                 <CardHeading>
-                  <CardTitle>Fees Pending Due</CardTitle>
+                  <CardTitle className="pt-2.5">Fees Pending Due</CardTitle>
                   <CardDescription>
                     Total due: Rs{" "}
                     <CountingNumber to={stats.totalDue} duration={900} />
@@ -357,7 +427,11 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
               <CardContent className="grid gap-3">
                 {pendingMembers.length ? (
                   pendingMembers.map((member) => (
-                    <DueRow key={member.id} member={member} markDuePaid={markDuePaid} />
+                    <DueRow
+                      key={member.id}
+                      member={member}
+                      markDuePaid={markDuePaid}
+                    />
                   ))
                 ) : (
                   <div className="dues-empty">
@@ -376,14 +450,20 @@ function ManagementSection({ members, addMember, removeMember, toggleAttendance,
 
 function OpsStatCard({ icon: Icon, label, value, suffix, tone }) {
   return (
-    <Card className={`management-stat-card ${tone ? `management-stat-card-${tone}` : ""}`}>
+    <Card
+      className={`management-stat-card ${tone ? `management-stat-card-${tone}` : ""}`}
+    >
       <CardContent>
         <div className="flex items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-medium uppercase text-muted-foreground">{label}</div>
+            <div className="text-xs font-medium uppercase text-muted-foreground">
+              {label}
+            </div>
             <div className="mt-2 text-2xl font-semibold">
               <CountingNumber to={value} duration={900} />
-              <span className="text-sm font-medium text-muted-foreground">{suffix}</span>
+              <span className="text-sm font-medium text-muted-foreground">
+                {suffix}
+              </span>
             </div>
           </div>
           <div className="management-stat-icon">
@@ -402,11 +482,17 @@ function MemberAttendanceRow({ member, removeMember, toggleAttendance }) {
     <div className="attendance-row">
       <div className="member-cell">
         <div className="member-status-icon">
-          {member.checkedIn ? <UserRoundCheck className="size-4" /> : <UserRoundX className="size-4" />}
+          {member.checkedIn ? (
+            <UserRoundCheck className="size-4" />
+          ) : (
+            <UserRoundX className="size-4" />
+          )}
         </div>
         <div className="min-w-0">
           <div className="member-name-line">{member.name}</div>
-          <div className="member-meta">{member.id} | {member.phone}</div>
+          <div className="member-meta">
+            {member.id} | {member.phone}
+          </div>
           <div className="member-address">{member.address}</div>
         </div>
       </div>
@@ -419,12 +505,18 @@ function MemberAttendanceRow({ member, removeMember, toggleAttendance }) {
           </Badge>
           <Badge
             variant={membershipStatus.tone}
-            appearance={membershipStatus.value === "active" ? "light" : "default"}
+            appearance={
+              membershipStatus.value === "active" ? "light" : "default"
+            }
             size="sm"
           >
             {membershipStatus.label}
           </Badge>
-          <Badge variant={member.trainerRequired ? "success" : "outline"} appearance={member.trainerRequired ? "light" : "default"} size="sm">
+          <Badge
+            variant={member.trainerRequired ? "success" : "outline"}
+            appearance={member.trainerRequired ? "light" : "default"}
+            size="sm"
+          >
             Trainer: {member.trainerRequired ? "Yes" : "No"}
           </Badge>
         </div>
@@ -436,7 +528,11 @@ function MemberAttendanceRow({ member, removeMember, toggleAttendance }) {
       <div className="attendance-stack">
         <span className="attendance-label">Visit status</span>
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant={member.checkedIn ? "success" : "outline"} appearance={member.checkedIn ? "light" : "default"} size="sm">
+          <Badge
+            variant={member.checkedIn ? "success" : "outline"}
+            appearance={member.checkedIn ? "light" : "default"}
+            size="sm"
+          >
             {member.checkedIn ? "Inside" : "Outside"}
           </Badge>
           <span className="table-muted">{member.lastVisit}</span>
@@ -475,17 +571,27 @@ function DueRow({ member, markDuePaid }) {
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
           <div className="font-medium">{member.name}</div>
-          <Badge variant={member.dueDate === "Overdue" ? "warning" : "outline"} size="sm">
+          <Badge
+            variant={member.dueDate === "Overdue" ? "warning" : "outline"}
+            size="sm"
+          >
             {member.dueDate}
           </Badge>
         </div>
         <div className="mt-1 text-xs text-muted-foreground">
-          {member.plan} plan | {member.phone} | Trainer: {member.trainerRequired ? "Yes" : "No"}
+          {member.plan} plan | {member.phone} | Trainer:{" "}
+          {member.trainerRequired ? "Yes" : "No"}
         </div>
       </div>
       <div className="due-action">
-        <div className="text-right text-sm font-semibold">Rs {member.dueAmount}</div>
-        <Button size="sm" variant="outline" onClick={() => markDuePaid(member.id)}>
+        <div className="text-right text-sm font-semibold">
+          Rs {member.dueAmount}
+        </div>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => markDuePaid(member.id)}
+        >
           Mark paid
         </Button>
       </div>

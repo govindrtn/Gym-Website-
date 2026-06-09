@@ -36,15 +36,23 @@ function PricingSection({ selectedPlan, setSelectedPlan }) {
               >
                 <CardHeader>
                   <CardHeading>
-                    <CardTitle>{plan.name}</CardTitle>
+                    <CardTitle className="pt-2">{plan.name}</CardTitle>
                     <CardDescription>{plan.note}</CardDescription>
                   </CardHeading>
-                  {plan.featured && <Badge variant="success">Popular</Badge>}
+                  {plan.featured && (
+                    <Badge className="m-1" variant="success">
+                      Popular
+                    </Badge>
+                  )}
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-end gap-2">
-                    <span className="text-4xl font-semibold">Rs {plan.price}</span>
-                    <span className="pb-1 text-sm text-muted-foreground">/{plan.cadence}</span>
+                    <span className="text-4xl font-semibold">
+                      Rs {plan.price}
+                    </span>
+                    <span className="pb-1 text-sm text-muted-foreground">
+                      /{plan.cadence}
+                    </span>
                   </div>
                   <div className="plan-fit mt-5">
                     <div className="mb-2 flex items-center justify-between text-xs font-medium uppercase text-muted-foreground">
@@ -55,7 +63,10 @@ function PricingSection({ selectedPlan, setSelectedPlan }) {
                   </div>
                   <ul className="mt-6 grid gap-3">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3 text-sm">
+                      <li
+                        key={feature}
+                        className="flex items-center gap-3 text-sm"
+                      >
                         <span className="flex size-6 items-center justify-center rounded-full bg-accent text-primary">
                           <Check className="size-3.5" />
                         </span>

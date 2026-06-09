@@ -1,8 +1,23 @@
 import { useMemo, useState } from "react";
-import { Activity, Calculator, Dumbbell, Flame, Scale, Target, Utensils } from "lucide-react";
+import {
+  Activity,
+  Calculator,
+  Dumbbell,
+  Flame,
+  Scale,
+  Target,
+  Utensils,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
+  CardTitle,
+} from "@/components/ui/card";
 import { CountingNumber } from "@/components/ui/counting-number";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -14,9 +29,21 @@ const ACTIVITY_LEVELS = [
   { label: "Sedentary", value: 1.2, detail: "Little or no exercise" },
   { label: "Light", value: 1.375, detail: "Exercise 1-3 days/week" },
   { label: "Moderate", value: 1.465, detail: "Exercise 4-5 days/week" },
-  { label: "Active", value: 1.55, detail: "Daily weight training or hard sessions" },
-  { label: "Very active", value: 1.725, detail: "Intense training 6-7 days/week" },
-  { label: "Extra active", value: 1.9, detail: "Very intense training or physical job" },
+  {
+    label: "Active",
+    value: 1.55,
+    detail: "Daily weight training or hard sessions",
+  },
+  {
+    label: "Very active",
+    value: 1.725,
+    detail: "Intense training 6-7 days/week",
+  },
+  {
+    label: "Extra active",
+    value: 1.9,
+    detail: "Very intense training or physical job",
+  },
 ];
 
 const GOALS = [
@@ -41,9 +68,15 @@ function CalorieCalculatorSection() {
   const [form, setForm] = useState(initialForm);
 
   const result = useMemo(() => calculateCalories(form), [form]);
-  const selectedActivity = ACTIVITY_LEVELS.find((activity) => String(activity.value) === form.activity);
+  const selectedActivity = ACTIVITY_LEVELS.find(
+    (activity) => String(activity.value) === form.activity,
+  );
   const selectedGoal = GOALS.find((goal) => String(goal.value) === form.goal);
-  const dietPlan = getDietSuggestions(form.gender, Number(form.goal), result.targetCalories);
+  const dietPlan = getDietSuggestions(
+    form.gender,
+    Number(form.goal),
+    result.targetCalories,
+  );
 
   function updateForm(field, value) {
     setForm((currentForm) => ({
@@ -64,22 +97,38 @@ function CalorieCalculatorSection() {
               Calculate daily calories for weight training goals.
             </h1>
             <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground sm:text-base">
-              Male/female profile, height, weight, activity aur goal ke basis par BMR, maintenance calories,
-              target calories, macros aur diet suggestions milenge.
+              Male/female profile, height, weight, activity aur goal ke basis
+              par BMR, maintenance calories, target calories, macros aur diet
+              suggestions milenge.
             </p>
 
             <div className="calorie-info-grid">
-              <InfoTile icon={Calculator} label="Formula" value="Mifflin-St Jeor" />
-              <InfoTile icon={Dumbbell} label="Gym focus" value="Weight training" />
-              <InfoTile icon={Utensils} label="Output" value="Calories + macros" />
+              <InfoTile
+                icon={Calculator}
+                label="Formula"
+                value="Mifflin-St Jeor"
+              />
+              <InfoTile
+                icon={Dumbbell}
+                label="Gym focus"
+                value="Weight training"
+              />
+              <InfoTile
+                icon={Utensils}
+                label="Output"
+                value="Calories + macros"
+              />
             </div>
           </div>
 
           <Card className="calorie-form-card">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Profile Details</CardTitle>
-                <CardDescription>Age 15-80 recommended. Values are estimates, not medical advice.</CardDescription>
+                <CardTitle className="pt-2.5">Profile Details</CardTitle>
+                <CardDescription>
+                  Age 15-80 recommended. Values are estimates, not medical
+                  advice.
+                </CardDescription>
               </CardHeading>
               <Badge variant="primary" appearance="light">
                 {form.gender}
@@ -87,7 +136,11 @@ function CalorieCalculatorSection() {
             </CardHeader>
             <CardContent>
               <div className="calorie-form">
-                <div className="calorie-segment" role="group" aria-label="Select gender">
+                <div
+                  className="calorie-segment"
+                  role="group"
+                  aria-label="Select gender"
+                >
                   <Button
                     type="button"
                     variant={form.gender === "male" ? "primary" : "outline"}
@@ -105,9 +158,30 @@ function CalorieCalculatorSection() {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-3">
-                  <NumberField label="Age" value={form.age} min="15" max="80" suffix="years" onChange={(value) => updateForm("age", value)} />
-                  <NumberField label="Height" value={form.height} min="100" max="230" suffix="cm" onChange={(value) => updateForm("height", value)} />
-                  <NumberField label="Weight" value={form.weight} min="30" max="220" suffix="kg" onChange={(value) => updateForm("weight", value)} />
+                  <NumberField
+                    label="Age"
+                    value={form.age}
+                    min="15"
+                    max="80"
+                    suffix="years"
+                    onChange={(value) => updateForm("age", value)}
+                  />
+                  <NumberField
+                    label="Height"
+                    value={form.height}
+                    min="100"
+                    max="230"
+                    suffix="cm"
+                    onChange={(value) => updateForm("height", value)}
+                  />
+                  <NumberField
+                    label="Weight"
+                    value={form.weight}
+                    min="30"
+                    max="220"
+                    suffix="kg"
+                    onChange={(value) => updateForm("weight", value)}
+                  />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -134,25 +208,64 @@ function CalorieCalculatorSection() {
         </div>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-3">
-          <ResultCard icon={Flame} label="BMR" value={result.bmr} description="Calories your body uses at rest." />
-          <ResultCard icon={Activity} label="Maintenance" value={result.maintenanceCalories} description={selectedActivity?.detail ?? "Activity adjusted calories."} />
-          <ResultCard icon={Target} label="Target Calories" value={result.targetCalories} description={selectedGoal?.label ?? "Selected goal calories."} featured />
+          <ResultCard
+            icon={Flame}
+            label="BMR"
+            value={result.bmr}
+            description="Calories your body uses at rest."
+          />
+          <ResultCard
+            icon={Activity}
+            label="Maintenance"
+            value={result.maintenanceCalories}
+            description={
+              selectedActivity?.detail ?? "Activity adjusted calories."
+            }
+          />
+          <ResultCard
+            icon={Target}
+            label="Target Calories"
+            value={result.targetCalories}
+            description={selectedGoal?.label ?? "Selected goal calories."}
+            featured
+          />
         </div>
 
         <div className="mt-5 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
           <Card className="calorie-result-card">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Macro Split</CardTitle>
-                <CardDescription>Gym-friendly split based on your target calories.</CardDescription>
+                <CardTitle className="pt-2.5">Macro Split</CardTitle>
+                <CardDescription>
+                  Gym-friendly split based on your target calories.
+                </CardDescription>
               </CardHeading>
               <Scale className="size-5 text-primary" />
             </CardHeader>
             <CardContent className="grid gap-4">
-              <MacroRow label="Protein" value={result.macros.proteinGrams} calories={result.macros.proteinCalories} percent={result.macros.proteinPercent} />
-              <MacroRow label="Carbs" value={result.macros.carbsGrams} calories={result.macros.carbsCalories} percent={result.macros.carbsPercent} />
-              <MacroRow label="Fat" value={result.macros.fatGrams} calories={result.macros.fatCalories} percent={result.macros.fatPercent} />
-              <div className={result.isBelowMinimum ? "calorie-warning" : "calorie-note"}>
+              <MacroRow
+                label="Protein"
+                value={result.macros.proteinGrams}
+                calories={result.macros.proteinCalories}
+                percent={result.macros.proteinPercent}
+              />
+              <MacroRow
+                label="Carbs"
+                value={result.macros.carbsGrams}
+                calories={result.macros.carbsCalories}
+                percent={result.macros.carbsPercent}
+              />
+              <MacroRow
+                label="Fat"
+                value={result.macros.fatGrams}
+                calories={result.macros.fatCalories}
+                percent={result.macros.fatPercent}
+              />
+              <div
+                className={
+                  result.isBelowMinimum ? "calorie-warning" : "calorie-note"
+                }
+              >
                 {result.isBelowMinimum
                   ? "Target calories minimum safe guideline se low hain. Dietician/doctor guidance ke bina itna low mat jao."
                   : `Estimated weekly weight change: ${result.weeklyChangeLabel}.`}
@@ -163,10 +276,13 @@ function CalorieCalculatorSection() {
           <Card className="calorie-result-card">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Diet Suggestions</CardTitle>
+                <CardTitle className="pt-2.5">Diet Suggestions</CardTitle>
                 <CardDescription>{dietPlan.title}</CardDescription>
               </CardHeading>
-              <Badge variant={Number(form.goal) < 0 ? "warning" : "success"} appearance="light">
+              <Badge
+                variant={Number(form.goal) < 0 ? "warning" : "success"}
+                appearance="light"
+              >
                 {selectedGoal?.label}
               </Badge>
             </CardHeader>
@@ -194,9 +310,10 @@ function calculateCalories(form) {
   const weight = clampNumber(Number(form.weight), 30, 220);
   const activity = Number(form.activity);
   const goalAdjustment = Number(form.goal);
-  const bmr = gender === "male"
-    ? 10 * weight + 6.25 * height - 5 * age + 5
-    : 10 * weight + 6.25 * height - 5 * age - 161;
+  const bmr =
+    gender === "male"
+      ? 10 * weight + 6.25 * height - 5 * age + 5
+      : 10 * weight + 6.25 * height - 5 * age - 161;
   const maintenanceCalories = Math.round(bmr * activity);
   const targetCalories = Math.round(maintenanceCalories + goalAdjustment);
   const minimumCalories = gender === "male" ? 1500 : 1200;
@@ -204,7 +321,10 @@ function calculateCalories(form) {
   const proteinCalories = proteinGrams * 4;
   const fatCalories = Math.round(targetCalories * 0.25);
   const fatGrams = Math.round(fatCalories / 9);
-  const carbsCalories = Math.max(targetCalories - proteinCalories - fatCalories, 0);
+  const carbsCalories = Math.max(
+    targetCalories - proteinCalories - fatCalories,
+    0,
+  );
   const carbsGrams = Math.round(carbsCalories / 4);
   const weeklyKgChange = Math.abs((goalAdjustment * 7) / 7700);
 
@@ -213,9 +333,10 @@ function calculateCalories(form) {
     maintenanceCalories,
     targetCalories,
     isBelowMinimum: targetCalories < minimumCalories,
-    weeklyChangeLabel: goalAdjustment === 0
-      ? "mostly stable"
-      : `${goalAdjustment > 0 ? "+" : "-"}${weeklyKgChange.toFixed(2)} kg/week approx`,
+    weeklyChangeLabel:
+      goalAdjustment === 0
+        ? "mostly stable"
+        : `${goalAdjustment > 0 ? "+" : "-"}${weeklyKgChange.toFixed(2)} kg/week approx`,
     macros: {
       proteinGrams,
       proteinCalories,
@@ -233,16 +354,18 @@ function calculateCalories(form) {
 function getDietSuggestions(gender, goalAdjustment, calories) {
   const isCutting = goalAdjustment < 0;
   const isGaining = goalAdjustment > 0;
-  const genderNote = gender === "female"
-    ? "Iron, calcium, protein aur hydration par extra dhyan rakho."
-    : "Protein, fiber aur controlled carbs ko stable rakho.";
+  const genderNote =
+    gender === "female"
+      ? "Iron, calcium, protein aur hydration par extra dhyan rakho."
+      : "Protein, fiber aur controlled carbs ko stable rakho.";
 
   return {
     title: `${Math.round(calories)} kcal target ke liye practical Indian gym diet ideas.`,
     items: [
       {
         title: "Protein base",
-        detail: "Paneer/tofu, eggs, chicken, fish, dal, chana, soy chunks, curd. Har meal me protein source rakho.",
+        detail:
+          "Paneer/tofu, eggs, chicken, fish, dal, chana, soy chunks, curd. Har meal me protein source rakho.",
       },
       {
         title: "Carb timing",
@@ -252,7 +375,8 @@ function getDietSuggestions(gender, goalAdjustment, calories) {
       },
       {
         title: "Fats and recovery",
-        detail: "Nuts, seeds, peanut butter, olive/mustard oil measured quantity me. Deep fried food regular mat rakho.",
+        detail:
+          "Nuts, seeds, peanut butter, olive/mustard oil measured quantity me. Deep fried food regular mat rakho.",
       },
       {
         title: "Goal focus",
@@ -266,7 +390,8 @@ function getDietSuggestions(gender, goalAdjustment, calories) {
       },
       {
         title: "Silver Gym rule",
-        detail: "Weight training ke saath 7-8 hours sleep, 2-3L water, aur weekly weight tracking maintain karo.",
+        detail:
+          "Weight training ke saath 7-8 hours sleep, 2-3L water, aur weekly weight tracking maintain karo.",
       },
     ],
   };
@@ -294,7 +419,9 @@ function InfoTile({ icon: Icon, label, value }) {
     <div className="calorie-info-tile">
       <Icon className="size-4 text-primary" />
       <div>
-        <div className="text-xs font-medium uppercase text-muted-foreground">{label}</div>
+        <div className="text-xs font-medium uppercase text-muted-foreground">
+          {label}
+        </div>
         <div className="text-sm font-semibold">{value}</div>
       </div>
     </div>
@@ -303,16 +430,27 @@ function InfoTile({ icon: Icon, label, value }) {
 
 function ResultCard({ icon: Icon, label, value, description, featured }) {
   return (
-    <Card className={featured ? "calorie-result-card is-featured" : "calorie-result-card"}>
+    <Card
+      className={
+        featured ? "calorie-result-card is-featured" : "calorie-result-card"
+      }
+    >
       <CardContent>
         <div className="flex items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-medium uppercase text-muted-foreground">{label}</div>
+            <div className="text-xs font-medium uppercase text-muted-foreground">
+              {label}
+            </div>
             <div className="mt-2 text-3xl font-semibold">
               <CountingNumber to={value} duration={900} />
-              <span className="text-sm font-medium text-muted-foreground"> kcal</span>
+              <span className="text-sm font-medium text-muted-foreground">
+                {" "}
+                kcal
+              </span>
             </div>
-            <div className="mt-2 text-xs leading-5 text-muted-foreground">{description}</div>
+            <div className="mt-2 text-xs leading-5 text-muted-foreground">
+              {description}
+            </div>
           </div>
           <div className="calorie-result-icon">
             <Icon className="size-5" />
@@ -329,7 +467,9 @@ function MacroRow({ label, value, calories, percent }) {
       <div className="macro-row-top">
         <div>
           <div className="text-sm font-semibold">{label}</div>
-          <div className="text-xs text-muted-foreground">{value}g / {calories} kcal</div>
+          <div className="text-xs text-muted-foreground">
+            {value}g / {calories} kcal
+          </div>
         </div>
         <div className="text-sm font-semibold text-primary">{percent}%</div>
       </div>

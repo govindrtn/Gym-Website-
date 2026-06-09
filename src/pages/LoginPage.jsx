@@ -1,8 +1,21 @@
 import { useState } from "react";
-import { ArrowRight, Dumbbell, LockKeyhole, ShieldCheck, UserRound } from "lucide-react";
+import {
+  ArrowRight,
+  Dumbbell,
+  LockKeyhole,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { BrandWordmark } from "@/components/site/BrandWordmark";
 import { DEMO_ACCOUNTS, USER_ROLES } from "@/constants";
@@ -17,7 +30,8 @@ const roleContent = {
   },
   [USER_ROLES.USER]: {
     title: "Member Access",
-    detail: "Training, timetable, coaches, plans, enquiry and motivation content.",
+    detail:
+      "Training, timetable, coaches, plans, enquiry and motivation content.",
     icon: UserRound,
   },
 };
@@ -53,10 +67,13 @@ function LoginPage({ loginError, onLogin }) {
             </Badge>
             <div className="mt-5 grid gap-3">
               <BrandWordmark tone="dark" className="login-brand-wordmark" />
-              <h1 className="text-3xl font-semibold leading-tight sm:text-5xl">Silver Gym login</h1>
+              <h1 className="text-3xl font-semibold leading-tight sm:text-5xl">
+                Silver Gym login
+              </h1>
             </div>
             <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground sm:text-base">
-              Admin aur member sections ko separate rakho. Login ke baad dashboard, tabs aur actions role ke hisaab se change honge.
+              Admin aur member sections ko separate rakho. Login ke baad
+              dashboard, tabs aur actions role ke hisaab se change honge.
             </p>
 
             <div className="login-role-grid">
@@ -67,15 +84,23 @@ function LoginPage({ loginError, onLogin }) {
                   <button
                     key={account.role}
                     type="button"
-                    className={selectedAccount.role === account.role ? "login-role-card is-active" : "login-role-card"}
+                    className={
+                      selectedAccount.role === account.role
+                        ? "login-role-card is-active"
+                        : "login-role-card"
+                    }
                     onClick={() => setSelectedAccount(account)}
                   >
                     <span className="login-role-icon">
                       <RoleIcon className="size-4" />
                     </span>
                     <span>
-                      <span className="login-role-title">{roleContent[account.role].title}</span>
-                      <span className="login-role-detail">{roleContent[account.role].detail}</span>
+                      <span className="login-role-title">
+                        {roleContent[account.role].title}
+                      </span>
+                      <span className="login-role-detail">
+                        {roleContent[account.role].detail}
+                      </span>
                     </span>
                   </button>
                 );
@@ -86,7 +111,7 @@ function LoginPage({ loginError, onLogin }) {
           <Card className="login-card">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Login to dashboard</CardTitle>
+                <CardTitle className="pt-2">Login to dashboard</CardTitle>
                 <CardDescription>
                   Demo: {selectedAccount.email} / {selectedAccount.password}
                 </CardDescription>
@@ -96,9 +121,15 @@ function LoginPage({ loginError, onLogin }) {
               </div>
             </CardHeader>
             <CardContent>
-              <form key={selectedAccount.role} className="grid gap-4" onSubmit={handleSubmit}>
+              <form
+                key={selectedAccount.role}
+                className="grid gap-4"
+                onSubmit={handleSubmit}
+              >
                 <div>
-                  <label className="sr-only" htmlFor="login-email">Email</label>
+                  <label className="sr-only" htmlFor="login-email">
+                    Email
+                  </label>
                   <Input
                     id="login-email"
                     name="email"
@@ -110,7 +141,9 @@ function LoginPage({ loginError, onLogin }) {
                   />
                 </div>
                 <div>
-                  <label className="sr-only" htmlFor="login-password">Password</label>
+                  <label className="sr-only" htmlFor="login-password">
+                    Password
+                  </label>
                   <Input
                     id="login-password"
                     name="password"
@@ -139,7 +172,9 @@ function LoginPage({ loginError, onLogin }) {
                     variant="outline"
                     onClick={() => handleDemoLogin(account)}
                   >
-                    {account.role === USER_ROLES.ADMIN ? "Login as Admin" : "Login as User"}
+                    {account.role === USER_ROLES.ADMIN
+                      ? "Login as Admin"
+                      : "Login as User"}
                     <Dumbbell />
                   </Button>
                 ))}

@@ -2,7 +2,14 @@ import { useState } from "react";
 import { ArrowLeft, KeyRound, Mail, Send } from "lucide-react";
 import { BrandWordmark } from "@/components/site/BrandWordmark";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { APP_ROUTES } from "@/routes";
 import { gymApi } from "@/services/gymApiService";
@@ -33,7 +40,7 @@ function ForgotPasswordPage() {
   return (
     <section className="password-recovery-page section-block">
       <div className="container relative z-10">
-        <Card className="password-recovery-card">
+        <Card className="password-recovery-card py-2.5">
           <CardHeader>
             <CardHeading>
               <div className="password-recovery-brand">
@@ -41,7 +48,8 @@ function ForgotPasswordPage() {
               </div>
               <CardTitle className="mt-4">Forgot password</CardTitle>
               <CardDescription>
-                Apna registered email enter karo. Development mode me reset link yahin milega.
+                Apna registered email enter karo. Development mode me reset link
+                yahin milega.
               </CardDescription>
             </CardHeading>
             <div className="password-recovery-icon">
@@ -51,7 +59,12 @@ function ForgotPasswordPage() {
           <CardContent>
             <form className="grid gap-4" onSubmit={handleSubmit}>
               <div>
-                <label className="password-recovery-label" htmlFor="forgot-email">Email address</label>
+                <label
+                  className="password-recovery-label"
+                  htmlFor="forgot-email"
+                >
+                  Email address
+                </label>
                 <div className="password-recovery-input">
                   <Mail className="size-4" />
                   <Input
@@ -73,7 +86,9 @@ function ForgotPasswordPage() {
                   <div>{result.message}</div>
                   {result.resetToken && (
                     <Button asChild size="sm" variant="outline">
-                      <a href={`${APP_ROUTES.RESET_PASSWORD}?token=${result.resetToken}`}>
+                      <a
+                        href={`${APP_ROUTES.RESET_PASSWORD}?token=${result.resetToken}`}
+                      >
                         Open reset password
                         <KeyRound />
                       </a>

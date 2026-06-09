@@ -2,7 +2,14 @@ import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { USER_ROLES } from "@/constants";
 import { coachHighlights } from "@/data/siteData";
@@ -54,7 +61,10 @@ function CoachesSection({ currentUser, coaches = [], addCoach, removeCoach }) {
             />
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {coachHighlights.map((item) => (
-                <div key={item.label} className="flex items-center gap-3 rounded-lg border border-border bg-card p-3">
+                <div
+                  key={item.label}
+                  className="flex items-center gap-3 rounded-lg border border-border bg-card p-3"
+                >
                   <div className="flex size-9 items-center justify-center rounded-md bg-accent text-primary">
                     <item.icon className="size-4" />
                   </div>
@@ -97,8 +107,12 @@ function CoachesSection({ currentUser, coaches = [], addCoach, removeCoach }) {
           <Card className="coach-admin-card mt-8">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Add Weight Training Coach</CardTitle>
-                <CardDescription>Admin can add a new coach to the Silver Gym coach bench.</CardDescription>
+                <CardTitle className="pt-2.5">
+                  Add Weight Training Coach
+                </CardTitle>
+                <CardDescription>
+                  Admin can add a new coach to the Silver Gym coach bench.
+                </CardDescription>
               </CardHeading>
               <Badge variant="success" appearance="light">
                 Admin
@@ -107,31 +121,43 @@ function CoachesSection({ currentUser, coaches = [], addCoach, removeCoach }) {
             <CardContent>
               <form className="coach-admin-form" onSubmit={handleAddCoach}>
                 <div>
-                  <label className="coach-label" htmlFor="coach-name">Coach name</label>
+                  <label className="coach-label" htmlFor="coach-name">
+                    Coach name
+                  </label>
                   <Input
                     id="coach-name"
                     value={coachForm.name}
-                    onChange={(event) => updateCoachForm("name", event.target.value)}
+                    onChange={(event) =>
+                      updateCoachForm("name", event.target.value)
+                    }
                     placeholder="Coach name"
                     required
                   />
                 </div>
                 <div>
-                  <label className="coach-label" htmlFor="coach-role">Role</label>
+                  <label className="coach-label" htmlFor="coach-role">
+                    Role
+                  </label>
                   <Input
                     id="coach-role"
                     value={coachForm.role}
-                    onChange={(event) => updateCoachForm("role", event.target.value)}
+                    onChange={(event) =>
+                      updateCoachForm("role", event.target.value)
+                    }
                     placeholder="Weight Training Coach"
                     required
                   />
                 </div>
                 <div>
-                  <label className="coach-label" htmlFor="coach-focus">Focus</label>
+                  <label className="coach-label" htmlFor="coach-focus">
+                    Focus
+                  </label>
                   <Input
                     id="coach-focus"
                     value={coachForm.focus}
-                    onChange={(event) => updateCoachForm("focus", event.target.value)}
+                    onChange={(event) =>
+                      updateCoachForm("focus", event.target.value)
+                    }
                     placeholder="Free weights, machines, form correction"
                     required
                   />

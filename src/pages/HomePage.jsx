@@ -15,8 +15,19 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardHeading, CardTitle } from "@/components/ui/card";
-import { ShimmeringText, TypingText, WordRotate } from "@/components/ui/animated-text";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardHeading,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ShimmeringText,
+  TypingText,
+  WordRotate,
+} from "@/components/ui/animated-text";
 import { CountingNumber } from "@/components/ui/counting-number";
 import { Progress, ProgressCircle } from "@/components/ui/progress";
 import { TechGridBackground } from "@/components/ui/tech-background";
@@ -28,8 +39,13 @@ import "./HomePage.css";
 function HomePage({ currentUser, members }) {
   const isAdmin = currentUser?.role === USER_ROLES.ADMIN;
   const activeMembers = members.filter((member) => member.checkedIn).length;
-  const attendancePercent = members.length ? Math.round((activeMembers / members.length) * 100) : 0;
-  const pendingDue = members.reduce((sum, member) => sum + Number(member.dueAmount || 0), 0);
+  const attendancePercent = members.length
+    ? Math.round((activeMembers / members.length) * 100)
+    : 0;
+  const pendingDue = members.reduce(
+    (sum, member) => sum + Number(member.dueAmount || 0),
+    0,
+  );
   const monthlyPotential = members.reduce((sum, member) => {
     const memberPlan = plans.find((plan) => plan.name === member.plan);
     return sum + Number(memberPlan?.price ?? 0);
@@ -38,12 +54,22 @@ function HomePage({ currentUser, members }) {
   const monthlyPerformance = monthlyPotential
     ? Math.round((monthlyCollected / monthlyPotential) * 100)
     : 0;
-  const pendingDueMembers = members.filter((member) => Number(member.dueAmount || 0) > 0);
+  const pendingDueMembers = members.filter(
+    (member) => Number(member.dueAmount || 0) > 0,
+  );
   const paidMembers = members.length - pendingDueMembers.length;
-  const trainerMembers = members.filter((member) => member.trainerRequired).length;
-  const trainerDemandPercent = members.length ? Math.round((trainerMembers / members.length) * 100) : 0;
-  const accountClearPercent = members.length ? Math.round((paidMembers / members.length) * 100) : 0;
-  const activeMemberPreview = members.filter((member) => member.checkedIn).slice(0, 3);
+  const trainerMembers = members.filter(
+    (member) => member.trainerRequired,
+  ).length;
+  const trainerDemandPercent = members.length
+    ? Math.round((trainerMembers / members.length) * 100)
+    : 0;
+  const accountClearPercent = members.length
+    ? Math.round((paidMembers / members.length) * 100)
+    : 0;
+  const activeMemberPreview = members
+    .filter((member) => member.checkedIn)
+    .slice(0, 3);
   const dueFollowUps = pendingDueMembers.slice(0, 3);
   const planMix = plans.map((plan) => {
     const count = members.filter((member) => member.plan === plan.name).length;
@@ -132,12 +158,14 @@ function HomePage({ currentUser, members }) {
   const motivationCards = [
     {
       title: "Show up first",
-      detail: "Aaj ka perfect workout nahi, regular check-in hi real progress banata hai.",
+      detail:
+        "Aaj ka perfect workout nahi, regular check-in hi real progress banata hai.",
       icon: Dumbbell,
     },
     {
       title: "Control every rep",
-      detail: "Slow form, strong breathing, clean movement. Strength wahi se start hoti hai.",
+      detail:
+        "Slow form, strong breathing, clean movement. Strength wahi se start hoti hai.",
       icon: ShieldCheck,
     },
     {
@@ -163,7 +191,11 @@ function HomePage({ currentUser, members }) {
             </Badge>
             <h1 className="mt-5 max-w-xl text-4xl font-semibold leading-tight sm:text-5xl">
               <ShimmeringText
-                text={isAdmin ? "Silver Gym daily control room." : "Silver Gym member training zone."}
+                text={
+                  isAdmin
+                    ? "Silver Gym daily control room."
+                    : "Silver Gym member training zone."
+                }
                 color="var(--foreground)"
                 shimmerColor="var(--primary)"
               />
@@ -174,8 +206,18 @@ function HomePage({ currentUser, members }) {
                 className="home-rotating-word"
                 words={
                   isAdmin
-                    ? ["active members", "attendance percentage", "fee recovery", "monthly performance"]
-                    : ["training plan", "class timetable", "coach support", "daily motivation"]
+                    ? [
+                        "active members",
+                        "attendance percentage",
+                        "fee recovery",
+                        "monthly performance",
+                      ]
+                    : [
+                        "training plan",
+                        "class timetable",
+                        "coach support",
+                        "daily motivation",
+                      ]
                 }
               />{" "}
               from one live home screen.
@@ -183,7 +225,11 @@ function HomePage({ currentUser, members }) {
             <div className="home-live-line">
               <span className="home-live-dot" aria-hidden="true" />
               <TypingText
-                texts={["Local storage sync online", "Attendance engine active", "Excel report ready"]}
+                texts={[
+                  "Local storage sync online",
+                  "Attendance engine active",
+                  "Excel report ready",
+                ]}
                 speed={36}
                 pauseDuration={1400}
                 loop
@@ -198,7 +244,11 @@ function HomePage({ currentUser, members }) {
                       <Users />
                     </a>
                   </Button>
-                  <Button size="lg" variant="outline" onClick={() => downloadGymReport(members)}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => downloadGymReport(members)}
+                  >
                     Download Excel Report
                     <Download />
                   </Button>
@@ -225,12 +275,21 @@ function HomePage({ currentUser, members }) {
           <Card className="home-dashboard-panel">
             <CardHeader className="home-dashboard-panel-header">
               <CardHeading className="home-dashboard-panel-heading">
-                <CardTitle>{isAdmin ? "Today's Attendance" : "Member Training Pulse"}</CardTitle>
+                <CardTitle>
+                  {isAdmin ? "Today's Attendance" : "Member Training Pulse"}
+                </CardTitle>
                 <CardDescription>
-                  {isAdmin ? "Live member entry status from local storage." : "Your public member sections are ready."}
+                  {isAdmin
+                    ? "Live member entry status from local storage."
+                    : "Your public member sections are ready."}
                 </CardDescription>
               </CardHeading>
-              <ProgressCircle className="home-attendance-ring" value={isAdmin ? attendancePercent : 86} size={76} strokeWidth={7}>
+              <ProgressCircle
+                className="home-attendance-ring"
+                value={isAdmin ? attendancePercent : 86}
+                size={76}
+                strokeWidth={7}
+              >
                 {isAdmin ? attendancePercent : 86}%
               </ProgressCircle>
             </CardHeader>
@@ -238,15 +297,40 @@ function HomePage({ currentUser, members }) {
               <div className="grid gap-4 sm:grid-cols-3">
                 {isAdmin ? (
                   <>
-                    <MiniMetric label="Total members" value={members.length} icon={Users} />
-                    <MiniMetric label="Active today" value={activeMembers} icon={UserCheck} />
-                    <MiniMetric label="Pending dues" value={pendingDue} prefix="Rs " icon={AlertTriangle} />
+                    <MiniMetric
+                      label="Total members"
+                      value={members.length}
+                      icon={Users}
+                    />
+                    <MiniMetric
+                      label="Active today"
+                      value={activeMembers}
+                      icon={UserCheck}
+                    />
+                    <MiniMetric
+                      label="Pending dues"
+                      value={pendingDue}
+                      prefix="Rs "
+                      icon={AlertTriangle}
+                    />
                   </>
                 ) : (
                   <>
-                    <MiniMetric label="Training plans" value={plans.length} icon={Dumbbell} />
-                    <MiniMetric label="Focus score" value={86} icon={UserCheck} />
-                    <MiniMetric label="Rep blocks" value={repRhythm.length} icon={Activity} />
+                    <MiniMetric
+                      label="Training plans"
+                      value={plans.length}
+                      icon={Dumbbell}
+                    />
+                    <MiniMetric
+                      label="Focus score"
+                      value={86}
+                      icon={UserCheck}
+                    />
+                    <MiniMetric
+                      label="Rep blocks"
+                      value={repRhythm.length}
+                      icon={Activity}
+                    />
                   </>
                 )}
               </div>
@@ -261,10 +345,14 @@ function HomePage({ currentUser, members }) {
                 <CardContent>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-xs font-medium uppercase text-muted-foreground">Active members today</div>
+                      <div className="text-xs font-medium uppercase text-muted-foreground">
+                        Active members today
+                      </div>
                       <div className="mt-2 text-3xl font-semibold">
                         <CountingNumber to={activeMembers} duration={900} />
-                        <span className="text-sm font-medium text-muted-foreground">/{members.length}</span>
+                        <span className="text-sm font-medium text-muted-foreground">
+                          /{members.length}
+                        </span>
                       </div>
                     </div>
                     <div className="home-metric-icon">
@@ -278,8 +366,12 @@ function HomePage({ currentUser, members }) {
                 <CardContent>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-xs font-medium uppercase text-muted-foreground">Today's attendance</div>
-                      <div className="mt-2 text-3xl font-semibold">{attendancePercent}%</div>
+                      <div className="text-xs font-medium uppercase text-muted-foreground">
+                        Today's attendance
+                      </div>
+                      <div className="mt-2 text-3xl font-semibold">
+                        {attendancePercent}%
+                      </div>
                     </div>
                     <div className="home-metric-icon">
                       <CalendarCheck className="size-5" />
@@ -305,8 +397,12 @@ function HomePage({ currentUser, members }) {
                 <CardContent>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-xs font-medium uppercase text-muted-foreground">Monthly performance</div>
-                      <div className="mt-2 text-3xl font-semibold">{monthlyPerformance}%</div>
+                      <div className="text-xs font-medium uppercase text-muted-foreground">
+                        Monthly performance
+                      </div>
+                      <div className="mt-2 text-3xl font-semibold">
+                        {monthlyPerformance}%
+                      </div>
                     </div>
                     <div className="home-metric-icon">
                       <TrendingUp className="size-5" />
@@ -330,10 +426,16 @@ function HomePage({ currentUser, members }) {
             <Card className="home-report-card mt-5">
               <CardHeader>
                 <CardHeading>
-                  <CardTitle>Excel Report</CardTitle>
-                  <CardDescription>Download member attendance, trainer preference, and due amount data.</CardDescription>
+                  <CardTitle className="pt-2.5">Excel Report</CardTitle>
+                  <CardDescription>
+                    Download member attendance, trainer preference, and due
+                    amount data.
+                  </CardDescription>
                 </CardHeading>
-                <Button variant="outline" onClick={() => downloadGymReport(members)}>
+                <Button
+                  variant="outline"
+                  onClick={() => downloadGymReport(members)}
+                >
                   Download Excel
                   <Download />
                 </Button>
@@ -341,18 +443,28 @@ function HomePage({ currentUser, members }) {
               <CardContent className="grid gap-3">
                 <div className="home-report-row">
                   <div>
-                    <div className="text-sm font-medium">Monthly collection</div>
-                    <div className="text-xs text-muted-foreground">Collected vs expected plan value</div>
+                    <div className="text-sm font-medium">
+                      Monthly collection
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Collected vs expected plan value
+                    </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-semibold">Rs {monthlyCollected}</div>
-                    <div className="text-xs text-muted-foreground">of Rs {monthlyPotential}</div>
+                    <div className="text-sm font-semibold">
+                      Rs {monthlyCollected}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      of Rs {monthlyPotential}
+                    </div>
                   </div>
                 </div>
                 <div className="home-report-row">
                   <div>
                     <div className="text-sm font-medium">Fee pending due</div>
-                    <div className="text-xs text-muted-foreground">Pending amount across all members</div>
+                    <div className="text-xs text-muted-foreground">
+                      Pending amount across all members
+                    </div>
                   </div>
                   <div className="text-sm font-semibold">Rs {pendingDue}</div>
                 </div>
@@ -365,8 +477,10 @@ function HomePage({ currentUser, members }) {
           <Card className="home-insight-card home-command-card">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Command Shortcuts</CardTitle>
-                <CardDescription>Fast actions for daily front-desk work.</CardDescription>
+                <CardTitle className="pt-2.5">Command Shortcuts</CardTitle>
+                <CardDescription>
+                  Fast actions for daily front-desk work.
+                </CardDescription>
               </CardHeading>
               <Badge variant="info" appearance="light">
                 Live
@@ -384,8 +498,10 @@ function HomePage({ currentUser, members }) {
           <Card className="home-insight-card home-flow-card">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Today's Gym Flow</CardTitle>
-                <CardDescription>Operational rhythm for the day.</CardDescription>
+                <CardTitle className="pt-2.5">Today's Gym Flow</CardTitle>
+                <CardDescription>
+                  Operational rhythm for the day.
+                </CardDescription>
               </CardHeading>
             </CardHeader>
             <CardContent>
@@ -403,8 +519,10 @@ function HomePage({ currentUser, members }) {
             <Card className="home-insight-card home-member-card">
               <CardHeader>
                 <CardHeading>
-                  <CardTitle>Live Member Signal</CardTitle>
-                  <CardDescription>Current check-ins and payment follow-ups.</CardDescription>
+                  <CardTitle className="pt-2.5">Live Member Signal</CardTitle>
+                  <CardDescription>
+                    Current check-ins and payment follow-ups.
+                  </CardDescription>
                 </CardHeading>
               </CardHeader>
               <CardContent className="grid gap-5 md:grid-cols-2">
@@ -413,10 +531,16 @@ function HomePage({ currentUser, members }) {
                   <div className="mt-3 grid gap-3">
                     {activeMemberPreview.length ? (
                       activeMemberPreview.map((member) => (
-                        <HomeMemberRow key={member.id} member={member} tone="active" />
+                        <HomeMemberRow
+                          key={member.id}
+                          member={member}
+                          tone="active"
+                        />
                       ))
                     ) : (
-                      <div className="home-empty-state">No live check-ins yet.</div>
+                      <div className="home-empty-state">
+                        No live check-ins yet.
+                      </div>
                     )}
                   </div>
                 </div>
@@ -425,10 +549,16 @@ function HomePage({ currentUser, members }) {
                   <div className="mt-3 grid gap-3">
                     {dueFollowUps.length ? (
                       dueFollowUps.map((member) => (
-                        <HomeMemberRow key={member.id} member={member} tone="due" />
+                        <HomeMemberRow
+                          key={member.id}
+                          member={member}
+                          tone="due"
+                        />
                       ))
                     ) : (
-                      <div className="home-empty-state">All member fees are clear.</div>
+                      <div className="home-empty-state">
+                        All member fees are clear.
+                      </div>
                     )}
                   </div>
                 </div>
@@ -438,16 +568,34 @@ function HomePage({ currentUser, members }) {
             <Card className="home-insight-card home-plan-card">
               <CardHeader>
                 <CardHeading>
-                  <CardTitle>Performance Radar</CardTitle>
-                  <CardDescription>Attendance, collection and plan distribution.</CardDescription>
+                  <CardTitle className="pt-2.5">Performance Radar</CardTitle>
+                  <CardDescription>
+                    Attendance, collection and plan distribution.
+                  </CardDescription>
                 </CardHeading>
               </CardHeader>
               <CardContent>
                 <div className="home-signal-stack">
-                  <HomeSignalRow label="Attendance health" value={attendancePercent} meta={`${activeMembers}/${members.length} inside`} />
-                  <HomeSignalRow label="Monthly collection" value={monthlyPerformance} meta={`Rs ${monthlyCollected} collected`} />
-                  <HomeSignalRow label="Trainer demand" value={trainerDemandPercent} meta={`${trainerMembers} trainer members`} />
-                  <HomeSignalRow label="Accounts clear" value={accountClearPercent} meta={`${paidMembers} paid members`} />
+                  <HomeSignalRow
+                    label="Attendance health"
+                    value={attendancePercent}
+                    meta={`${activeMembers}/${members.length} inside`}
+                  />
+                  <HomeSignalRow
+                    label="Monthly collection"
+                    value={monthlyPerformance}
+                    meta={`Rs ${monthlyCollected} collected`}
+                  />
+                  <HomeSignalRow
+                    label="Trainer demand"
+                    value={trainerDemandPercent}
+                    meta={`${trainerMembers} trainer members`}
+                  />
+                  <HomeSignalRow
+                    label="Accounts clear"
+                    value={accountClearPercent}
+                    meta={`${paidMembers} paid members`}
+                  />
                 </div>
 
                 <div className="home-plan-mix">
@@ -473,8 +621,8 @@ function HomePage({ currentUser, members }) {
                 Discipline builds the body before the mirror does.
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-                Har attendance mark ek small win hai. Train with control, recover with patience,
-                and let consistency do the heavy lifting.
+                Har attendance mark ek small win hai. Train with control,
+                recover with patience, and let consistency do the heavy lifting.
               </p>
               <div className="home-motivation-grid">
                 {motivationCards.map((card) => (
@@ -506,7 +654,9 @@ function HomePage({ currentUser, members }) {
               <div className="home-rep-board">
                 <div>
                   <div className="home-panel-label">Rep rhythm</div>
-                  <div className="mt-1 text-sm font-semibold">Train smart, lift clean</div>
+                  <div className="mt-1 text-sm font-semibold">
+                    Train smart, lift clean
+                  </div>
                 </div>
                 <div className="home-rep-grid">
                   {repRhythm.map((item) => (
@@ -533,7 +683,9 @@ function MiniMetric({ icon: Icon, label, value, prefix = "" }) {
         {prefix}
         <CountingNumber to={value} duration={900} />
       </div>
-      <div className="mt-1 text-xs font-medium uppercase text-muted-foreground">{label}</div>
+      <div className="mt-1 text-xs font-medium uppercase text-muted-foreground">
+        {label}
+      </div>
     </div>
   );
 }
@@ -562,7 +714,9 @@ function HomeFlowItem({ icon: Icon, time, title, detail }) {
       </div>
       <div className="min-w-0">
         <div className="text-sm font-semibold">{title}</div>
-        <div className="mt-1 text-xs leading-5 text-muted-foreground">{detail}</div>
+        <div className="mt-1 text-xs leading-5 text-muted-foreground">
+          {detail}
+        </div>
       </div>
     </div>
   );
@@ -593,7 +747,9 @@ function HomeMemberRow({ member, tone }) {
       <span className="home-member-avatar">{getInitials(member.name)}</span>
       <span className="min-w-0">
         <span className="home-member-name">{member.name}</span>
-        <span className="home-member-meta">{isDue ? member.dueDate : member.lastVisit}</span>
+        <span className="home-member-meta">
+          {isDue ? member.dueDate : member.lastVisit}
+        </span>
       </span>
       <Badge variant={isDue ? "warning" : "success"} appearance="light">
         {isDue ? `Rs ${member.dueAmount}` : "Inside"}
