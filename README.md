@@ -58,6 +58,8 @@ Deployment setup repository me included hai:
 - Backend: Render at `https://silver-gym-api-govindrtn.onrender.com`
 - Database: MongoDB Atlas free cluster
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/govindrtn/Gym-Website-)
+
 Deploy karne ke steps:
 
 1. MongoDB Atlas me free cluster banao, database user create karo, aur Network Access me Render ke liye `0.0.0.0/0` allow karo.
