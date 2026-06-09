@@ -484,9 +484,26 @@
 
 @media (max-width: 1024px) {
   .theme-customizer-panel {
-    right: auto;
+    right: 0;
     left: 0;
-    width: min(100%, 22rem);
+    width: 100%;
+    max-height: min(36rem, calc(100svh - 8rem));
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-customizer-heading,
+  .theme-option-group {
+    padding-inline: 0.75rem;
+  }
+
+  .theme-mode-grid,
+  .theme-custom-color {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .theme-custom-color-hex {
+    min-height: 2.5rem;
   }
 }
 

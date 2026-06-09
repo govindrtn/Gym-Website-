@@ -9,7 +9,7 @@ function useCardContext() {
 }
 
 const cardVariants = cva(
-  "flex flex-col items-stretch rounded-lg text-card-foreground",
+  "flex min-w-0 max-w-full flex-col items-stretch rounded-lg text-card-foreground",
   {
     variants: {
       variant: {
@@ -37,7 +37,7 @@ function CardHeader({ className, ...props }) {
   return (
     <div
       className={cn(
-        "flex min-h-14 flex-wrap items-center justify-between gap-2.5 px-5",
+        "flex min-h-14 min-w-0 flex-wrap items-center justify-between gap-2.5 px-4 py-3 sm:px-5",
         variant === "default" && "border-b border-border",
         className,
       )}
@@ -52,7 +52,7 @@ function CardContent({ className, ...props }) {
   return (
     <div
       className={cn(
-        "grow p-5",
+        "min-w-0 grow p-4 sm:p-5",
         variant === "accent" && "rounded-lg bg-card",
         className,
       )}
@@ -64,14 +64,14 @@ function CardContent({ className, ...props }) {
 function CardFooter({ className, ...props }) {
   return (
     <div
-      className={cn("flex min-h-14 items-center border-t border-border px-5", className)}
+      className={cn("flex min-h-14 min-w-0 flex-wrap items-center gap-2 border-t border-border px-4 py-3 sm:px-5", className)}
       {...props}
     />
   );
 }
 
 function CardHeading({ className, ...props }) {
-  return <div className={cn("space-y-1", className)} {...props} />;
+  return <div className={cn("min-w-0 space-y-1", className)} {...props} />;
 }
 
 function CardTitle({ className, ...props }) {
@@ -85,12 +85,12 @@ function CardTitle({ className, ...props }) {
 
 function CardDescription({ className, ...props }) {
   return (
-    <p className={cn("text-sm text-muted-foreground", className)} {...props} />
+    <p className={cn("break-words text-sm text-muted-foreground", className)} {...props} />
   );
 }
 
 function CardToolbar({ className, ...props }) {
-  return <div className={cn("flex items-center gap-2.5", className)} {...props} />;
+  return <div className={cn("flex max-w-full flex-wrap items-center gap-2.5", className)} {...props} />;
 }
 
 export {

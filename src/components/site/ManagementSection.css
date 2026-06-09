@@ -236,6 +236,8 @@
 }
 
 .member-name-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--foreground);
   font-size: 0.875rem;
   font-weight: 600;
@@ -495,6 +497,18 @@
 
   .due-action > .text-right {
     text-align: left;
+  }
+
+  .attendance-action button,
+  .management-panel form > button {
+    width: 100%;
+  }
+
+  .member-meta,
+  .member-address,
+  .member-expiry-line,
+  .table-muted {
+    overflow-wrap: anywhere;
   }
 }
 

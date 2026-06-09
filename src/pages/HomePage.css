@@ -1318,7 +1318,7 @@
   }
 
   .home-rotating-word {
-    min-width: 9rem;
+    min-width: 0;
   }
 
   .home-live-line {
@@ -1350,6 +1350,7 @@
 
   .home-dashboard-panel-header {
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .home-rate-progress-meta {
@@ -1369,6 +1370,12 @@
   .home-lifter {
     bottom: 2.6rem;
     transform: translateX(-50%) scale(0.88);
+  }
+
+  .home-action-bar,
+  .home-action-bar a,
+  .home-action-bar button {
+    width: 100%;
   }
 }
 

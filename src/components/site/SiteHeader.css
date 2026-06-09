@@ -103,6 +103,9 @@
 .site-mobile-menu {
   border-top: 1px solid rgb(255 255 255 / 0.1);
   background: #09090b;
+  max-height: calc(100svh - 4rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   animation: mobileMenuIn 180ms ease both;
 }
 
@@ -279,5 +282,15 @@
   .site-header::after,
   .site-mobile-menu {
     animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-mobile-user {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .site-mobile-user strong {
+    grid-column: 2;
   }
 }

@@ -113,3 +113,17 @@
     animation: none;
   }
 }
+
+@media (max-width: 640px) {
+  .contact-whatsapp-stack,
+  .contact-success-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-whatsapp-stack a,
+  .contact-success-actions a,
+  .contact-form > button {
+    width: 100%;
+  }
+}

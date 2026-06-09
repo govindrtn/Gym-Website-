@@ -98,4 +98,10 @@
   @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
 }
 
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 0.875rem;
+  }
+}
+
 @import "./config.metronic.css";

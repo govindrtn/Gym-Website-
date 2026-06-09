@@ -1,9 +1,13 @@
 #root {
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 html {
   color-scheme: light;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 html.dark {
@@ -11,6 +15,8 @@ html.dark {
 }
 
 body {
+  max-width: 100%;
+  overflow-x: clip;
   transition:
     background-color 180ms ease,
     color 180ms ease;
@@ -268,13 +274,41 @@ section {
 
 @media (max-width: 640px) {
   [data-template="liquid"] .site-header {
-    inset-inline: 0.4rem;
+    inset-inline: 0.35rem;
     top: 0.35rem;
+  }
+
+  [data-template="liquid"] .route-page {
+    padding-top: 4.5rem;
   }
 }
 
 @media (max-width: 640px) {
   .section-block {
-    padding-block: 4rem;
+    padding-block: 3.25rem;
+  }
+
+  [data-template="performance"] .section-block,
+  [data-template="studio"] .section-block,
+  [data-template="neon"] .section-block,
+  [data-template="liquid"] .section-block {
+    padding-block: 3.5rem;
+  }
+
+  [data-template="executive"] .section-block,
+  [data-template="compact"] .section-block {
+    padding-block: 3rem;
+  }
+
+  .section-block h1,
+  .section-block h2,
+  .section-block h3,
+  .section-block p {
+    overflow-wrap: anywhere;
+  }
+
+  .section-block button,
+  .section-block a {
+    max-width: 100%;
   }
 }
