@@ -1,0 +1,506 @@
+.management-section {
+  position: relative;
+  overflow: hidden;
+  --management-accent: var(--primary);
+  --management-accent-soft: color-mix(in oklab, var(--primary) 14%, transparent);
+  --management-accent-muted: color-mix(in oklab, var(--primary) 30%, transparent);
+  --management-accent-line: color-mix(in oklab, var(--primary) 66%, transparent);
+  --management-accent-text: color-mix(in oklab, var(--primary) 72%, black);
+  background:
+    radial-gradient(circle at 22% 20%, var(--management-accent-soft), transparent 30%),
+    linear-gradient(180deg, var(--app-section-light-start) 0%, var(--app-section-light-end) 100%);
+}
+
+.dark .management-section {
+  --management-accent-text: color-mix(in oklab, var(--primary) 78%, white);
+  background:
+    radial-gradient(circle at 22% 20%, color-mix(in oklab, var(--primary) 16%, transparent), transparent 30%),
+    linear-gradient(180deg, var(--app-dark-section-start), var(--app-dark-section-end));
+}
+
+.management-section::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(rgb(15 23 42 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(15 23 42 / 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.management-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid color-mix(in oklab, var(--border) 78%, var(--primary));
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--card) 90%, transparent);
+  color: var(--foreground);
+  padding-inline: 0.75rem;
+  box-shadow: 0 14px 34px rgb(15 23 42 / 0.07);
+}
+
+.management-sync-badge {
+  height: 2.25rem;
+}
+
+.management-filter-row {
+  max-width: 26rem;
+}
+
+.management-stat-card,
+.management-panel {
+  position: relative;
+  overflow: hidden;
+  animation: managementPanelIn 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.management-stat-card {
+  min-width: 0;
+}
+
+.management-stat-card > * {
+  min-width: 0;
+}
+
+.management-stat-card::before,
+.management-panel::before {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--management-accent-line), transparent);
+}
+
+.management-stat-card-warning::before {
+  background: linear-gradient(90deg, transparent, rgb(245 158 11 / 0.78), transparent);
+}
+
+.management-stat-icon,
+.due-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.management-stat-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.management-ring {
+  flex: 0 0 auto;
+  color: var(--foreground);
+  filter: drop-shadow(0 0 18px var(--management-accent-soft));
+}
+
+.management-ring .ui-progress-circle-track {
+  color: rgb(148 163 184 / 0.24);
+}
+
+.management-ring .ui-progress-circle-indicator {
+  color: var(--management-accent);
+}
+
+.management-ring .ui-progress-circle-content {
+  color: var(--management-accent-text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.management-rate-content {
+  display: grid;
+  min-height: 7.15rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.management-rate-copy {
+  min-width: 0;
+}
+
+.management-rate-caption {
+  margin-top: 0.35rem;
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.management-workspace {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.management-secondary-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.due-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.875rem;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--card) 94%, var(--accent));
+  padding: 0.875rem;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.due-row:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--primary) 36%, var(--border));
+  box-shadow: 0 14px 34px rgb(15 23 42 / 0.08);
+}
+
+.member-status-icon,
+.due-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.attendance-board {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.attendance-board-head,
+.attendance-row {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1.3fr) minmax(12rem, 0.9fr) minmax(11rem, 0.8fr) minmax(7rem, auto);
+  gap: 1rem;
+  align-items: center;
+}
+
+.attendance-board-head {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--muted) 86%, var(--card));
+  padding: 0.75rem 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.attendance-row {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--card) 96%, var(--accent));
+  padding: 0.875rem 1rem;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.attendance-row:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--primary) 36%, var(--border));
+  background: color-mix(in oklab, var(--card) 91%, var(--accent));
+  box-shadow: 0 14px 34px rgb(15 23 42 / 0.08);
+}
+
+.member-cell {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.member-status-icon {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.member-name-line {
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.attendance-stack {
+  display: grid;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.attendance-label {
+  display: none;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.attendance-action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.member-remove-button {
+  color: var(--destructive);
+}
+
+.member-remove-button:hover {
+  border-color: color-mix(in oklab, var(--destructive) 42%, var(--border));
+  background: color-mix(in oklab, var(--destructive) 12%, var(--card));
+  color: var(--destructive);
+}
+
+.member-meta,
+.member-address,
+.member-expiry-line,
+.table-muted {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.member-expiry-line {
+  margin-top: 0.25rem;
+  font-weight: 600;
+}
+
+.member-address {
+  max-width: 34rem;
+  overflow-wrap: anywhere;
+}
+
+.trainer-yes {
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.attendance-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 7rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.dues-panel {
+  animation-delay: 110ms;
+}
+
+.new-member-panel {
+  animation-delay: 60ms;
+}
+
+.new-member-form {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.management-label {
+  display: block;
+  margin-bottom: 0.375rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.member-added-message {
+  border: 1px solid color-mix(in oklab, var(--primary) 34%, var(--border));
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--accent) 78%, var(--card));
+  padding: 0.75rem;
+  color: var(--accent-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: managementPanelIn 220ms ease both;
+}
+
+.due-action {
+  display: grid;
+  justify-items: end;
+  gap: 0.5rem;
+}
+
+.dues-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  border: 1px dashed color-mix(in oklab, var(--border) 74%, var(--primary));
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--card) 92%, var(--accent));
+  padding: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+@keyframes managementPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1280px) {
+  .management-secondary-grid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: start;
+  }
+
+  [data-template="performance"] .management-workspace {
+    grid-template-columns: minmax(0, 1.25fr) minmax(22rem, 0.75fr);
+    align-items: start;
+  }
+
+  [data-template="performance"] .attendance-panel {
+    min-height: 100%;
+  }
+
+  [data-template="performance"] .management-secondary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-template="executive"] .management-section > .container {
+    max-width: 76rem;
+  }
+
+  [data-template="executive"] .management-workspace {
+    max-width: 76rem;
+    margin-inline: auto;
+  }
+
+  [data-template="executive"] .management-secondary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [data-template="executive"] .attendance-board-head,
+  [data-template="executive"] .attendance-row {
+    grid-template-columns: minmax(15rem, 1.25fr) minmax(12rem, 0.9fr) minmax(10rem, 0.75fr) minmax(7rem, auto);
+  }
+
+  [data-template="studio"] .management-workspace {
+    gap: 2rem;
+  }
+
+  [data-template="studio"] .management-secondary-grid {
+    gap: 2rem;
+  }
+
+  [data-template="compact"] .management-workspace {
+    grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.6fr);
+    gap: 0.75rem;
+  }
+
+  [data-template="compact"] .management-secondary-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  [data-template="neon"] .management-workspace {
+    grid-template-columns: minmax(0, 1.2fr) minmax(22rem, 0.8fr);
+  }
+
+  [data-template="neon"] .management-panel {
+    border-color: color-mix(in oklab, var(--primary) 38%, var(--border));
+    box-shadow: 0 0 28px color-mix(in oklab, var(--primary) 12%, transparent);
+  }
+}
+
+@media (min-width: 1536px) {
+  .management-rate-content {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .attendance-board-head {
+    display: none;
+  }
+
+  .attendance-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.875rem;
+  }
+
+  .attendance-label {
+    display: block;
+  }
+
+  .attendance-action {
+    justify-content: stretch;
+  }
+
+  .attendance-action button {
+    flex: 1 1 9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .management-rate-content {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  .management-ring {
+    justify-self: start;
+  }
+
+  .management-rate-caption {
+    white-space: normal;
+  }
+
+  .due-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .due-action {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+
+  .due-action {
+    justify-items: stretch;
+  }
+
+  .due-action > .text-right {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .management-stat-card,
+  .management-panel {
+    animation: none;
+  }
+}

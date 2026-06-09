@@ -1,0 +1,11 @@
+export { default as CaloriesPage } from "./CaloriesPage";
+export { default as CoachesPage } from "./CoachesPage";
+export { default as ContactPage } from "./ContactPage";
+export { default as ForgotPasswordPage } from "./ForgotPasswordPage";
+export { default as HomePage } from "./HomePage";
+export { default as LoginPage } from "./LoginPage";
+export { default as ManagementPage } from "./ManagementPage";
+export { default as PlansPage } from "./PlansPage";
+export { default as ResetPasswordPage } from "./ResetPasswordPage";
+export { default as TimetablePage } from "./TimetablePage";
+export { default as TrainingPage } from "./TrainingPage";

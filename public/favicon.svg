@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1f2937"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="18" y1="16" x2="43" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".52" stop-color="#cbd5e1"/>
+      <stop offset="1" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" fill="none" stroke="#ffffff" stroke-opacity=".16" stroke-width="3"/>
+  <path d="M18 18.5c3.1-3.2 7.2-4.8 12.4-4.8 4.8 0 8.9 1.3 12.2 4l-5.4 6.2a11.8 11.8 0 0 0-7.4-2.5c-2.4 0-3.8.7-3.8 2 0 1.1 1.2 1.7 5.8 2.8 8.1 1.8 12.1 4.7 12.1 10.8 0 7.2-5.8 11.7-14.7 11.7-6.4 0-11.5-1.9-15.2-5.8l5.8-6.1c2.8 2.8 6 4.2 9.7 4.2 2.8 0 4.4-.8 4.4-2.3 0-1.3-1.4-2-6.5-3.1-7.6-1.7-11.4-4.5-11.4-10.6 0-2.5.7-4.7 2-6.5Z" fill="url(#silver)"/>
+  <path d="M12 51h40" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M8 47v8M13 45v12M51 45v12M56 47v8" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+</svg>

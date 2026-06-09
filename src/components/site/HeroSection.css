@@ -1,0 +1,295 @@
+.hero-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #08090b;
+}
+
+.hero-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.75), transparent 72%);
+  opacity: 0.7;
+  animation: heroGridDrift 18s linear infinite;
+}
+
+.hero-section::after {
+  position: absolute;
+  inset-inline: 0;
+  top: -18%;
+  z-index: 1;
+  height: 32%;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(180deg, transparent, rgb(34 197 94 / 0.13), transparent);
+  filter: blur(1px);
+  animation: heroScan 5.8s ease-in-out infinite;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url("/assets/gym-hero.png");
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.01);
+  animation: heroMediaPulse 16s ease-in-out infinite alternate;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(8 9 11 / 0.9) 0%, rgb(8 9 11 / 0.72) 38%, rgb(8 9 11 / 0.28) 78%),
+    linear-gradient(180deg, rgb(8 9 11 / 0.52) 0%, rgb(8 9 11 / 0.18) 46%, rgb(8 9 11 / 0.84) 100%);
+}
+
+.hero-tech-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.52;
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.07)),
+    rgb(8 9 11 / 0.54);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 0.24);
+  padding: 1.25rem;
+  backdrop-filter: blur(18px);
+  animation: heroPanelEnter 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-rotating-word {
+  color: #86efac;
+  font-weight: 700;
+}
+
+.hero-readiness-ring {
+  color: #ffffff;
+  filter: drop-shadow(0 0 18px rgb(34 197 94 / 0.28));
+}
+
+.hero-panel::before {
+  position: absolute;
+  inset-block: 0;
+  left: -40%;
+  width: 42%;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.18), transparent);
+  transform: skewX(-18deg);
+  animation: panelSweep 4.8s ease-in-out infinite;
+}
+
+.hero-stat {
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 0.08);
+  padding: 0.75rem;
+  backdrop-filter: blur(8px);
+  animation: heroRise 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.hero-stat:hover {
+  transform: translateY(-3px);
+  border-color: rgb(52 211 153 / 0.32);
+  background: rgb(255 255 255 / 0.12);
+}
+
+.hero-chip {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0.375rem;
+  background: rgb(255 255 255 / 0.05);
+  padding: 0.5rem 0.75rem;
+  color: #e4e4e7;
+  font-size: 0.75rem;
+  text-align: center;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.hero-chip:hover {
+  transform: translateY(-2px);
+  border-color: rgb(52 211 153 / 0.3);
+  background: rgb(52 211 153 / 0.1);
+}
+
+.hero-copy > * {
+  animation: heroRise 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-copy > :nth-child(1) {
+  animation-delay: 80ms;
+}
+
+.hero-copy > :nth-child(2) {
+  animation-delay: 170ms;
+}
+
+.hero-copy > :nth-child(3) {
+  animation-delay: 260ms;
+}
+
+.hero-copy > :nth-child(4) {
+  animation-delay: 350ms;
+}
+
+.hero-copy > :nth-child(5) {
+  animation-delay: 440ms;
+}
+
+.hero-title {
+  text-shadow: 0 0 32px rgb(34 197 94 / 0.14);
+}
+
+.hero-badge,
+.hero-live-badge {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.hero-live-badge {
+  animation: livePulse 1.7s ease-in-out infinite;
+}
+
+.hero-session-row {
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.hero-session-row:hover {
+  background: rgb(255 255 255 / 0.05);
+  transform: translateX(3px);
+}
+
+.hero-stat-grid > :nth-child(2) {
+  animation-delay: 520ms;
+}
+
+.hero-stat-grid > :nth-child(3) {
+  animation-delay: 600ms;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroPanelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroGridDrift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 44px 44px;
+  }
+}
+
+@keyframes heroScan {
+  0%,
+  22% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  45% {
+    opacity: 0.72;
+  }
+
+  100% {
+    transform: translateY(430%);
+    opacity: 0;
+  }
+}
+
+@keyframes heroMediaPulse {
+  from {
+    transform: scale(1.01);
+  }
+
+  to {
+    transform: scale(1.045);
+  }
+}
+
+@keyframes panelSweep {
+  0%,
+  50% {
+    transform: translateX(0) skewX(-18deg);
+  }
+
+  100% {
+    transform: translateX(360%) skewX(-18deg);
+  }
+}
+
+@keyframes livePulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 0 0 0 rgb(52 211 153 / 0);
+  }
+
+  50% {
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 0 0 6px rgb(52 211 153 / 0.12);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-media {
+    background-position: 58% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-section::before,
+  .hero-section::after,
+  .hero-media,
+  .hero-panel,
+  .hero-panel::before,
+  .hero-stat,
+  .hero-copy > *,
+  .hero-live-badge {
+    animation: none;
+  }
+}

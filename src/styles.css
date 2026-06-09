@@ -1,0 +1,280 @@
+#root {
+  min-height: 100vh;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+section {
+  scroll-margin-top: 5rem;
+}
+
+.section-block {
+  padding-block: 5rem;
+}
+
+.route-page {
+  padding-top: 4rem;
+}
+
+[data-template="performance"] .section-block {
+  padding-block: 5.5rem;
+}
+
+[data-template="executive"] .section-block {
+  padding-block: 4.5rem;
+}
+
+[data-template="studio"] .section-block {
+  padding-block: 6rem;
+}
+
+[data-template="compact"] .section-block {
+  padding-block: 3.5rem;
+}
+
+[data-template="neon"] .section-block {
+  padding-block: 5.25rem;
+}
+
+[data-template="liquid"] .section-block {
+  padding-block: 5.5rem;
+}
+
+.dark .home-dashboard,
+.dark .login-page,
+.dark .password-recovery-page {
+  background:
+    linear-gradient(90deg, rgb(2 6 23 / 0.96), rgb(15 23 42 / 0.9), rgb(2 6 23 / 0.62)),
+    radial-gradient(circle at 22% 16%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 30%),
+    url("/assets/gym-hero.png"),
+    linear-gradient(180deg, var(--app-dark-section-start), var(--app-dark-section-end));
+  background-position: center, 22% 16%, center right, center;
+  background-repeat: no-repeat;
+  background-size: cover, auto, cover, cover;
+}
+
+.dark .management-section,
+.dark .calorie-section,
+.dark .club-section,
+.dark #contact,
+.dark #coaches,
+.dark #pricing,
+.dark #plans,
+.dark #schedule,
+.dark #programs {
+  background:
+    radial-gradient(circle at 22% 20%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 30%),
+    linear-gradient(180deg, var(--app-dark-section-start), var(--app-dark-section-end));
+}
+
+.dark .bg-card,
+.dark .contact-item,
+.dark .login-role-card,
+.dark .home-mini-metric,
+.dark .home-action-tile,
+.dark .home-member-row,
+.dark .home-signal-row,
+.dark .home-plan-row,
+.dark .home-motivation-tile,
+.dark .home-rep-board,
+.dark .due-row,
+.dark .attendance-row,
+.dark .dues-empty,
+.dark .attendance-board-head {
+  background-color: color-mix(in oklab, var(--card) 88%, white 4%);
+}
+
+[data-template="performance"] .rounded-lg,
+[data-template="performance"] .rounded-md {
+  border-radius: var(--radius);
+}
+
+[data-template="executive"] .rounded-lg,
+[data-template="executive"] .rounded-md {
+  border-radius: var(--radius);
+}
+
+[data-template="studio"] .rounded-lg,
+[data-template="studio"] .rounded-md,
+[data-template="compact"] .rounded-lg,
+[data-template="compact"] .rounded-md,
+[data-template="neon"] .rounded-lg,
+[data-template="neon"] .rounded-md,
+[data-template="liquid"] .rounded-lg,
+[data-template="liquid"] .rounded-md {
+  border-radius: var(--radius);
+}
+
+[data-template="studio"] .container {
+  max-width: 82rem;
+}
+
+[data-template="studio"] .bg-card {
+  border-color: color-mix(in oklab, var(--primary) 12%, var(--border));
+  box-shadow: 0 22px 60px rgb(15 23 42 / 0.08);
+}
+
+[data-template="compact"] .container {
+  max-width: 90rem;
+}
+
+[data-template="compact"] .bg-card {
+  box-shadow: none;
+}
+
+[data-template="compact"] .bg-card > [class*="border-b"] {
+  min-height: 3rem;
+}
+
+[data-template="neon"] body {
+  background: #020617;
+}
+
+[data-template="neon"] .bg-card {
+  border-color: color-mix(in oklab, var(--primary) 34%, #1e293b);
+  background: color-mix(in oklab, #0f172a 92%, var(--primary));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
+    0 18px 48px rgb(0 0 0 / 0.34),
+    0 0 28px color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+[data-template="neon"] .site-header::after {
+  height: 2px;
+  box-shadow: 0 0 18px var(--primary);
+}
+
+[data-template="liquid"] body {
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in oklab, var(--primary) 24%, transparent), transparent 28rem),
+    radial-gradient(circle at 88% 22%, rgb(96 165 250 / 0.2), transparent 32rem),
+    linear-gradient(145deg, #e2e8f0, #f8fafc 48%, #dbeafe);
+  background-attachment: fixed;
+}
+
+.dark[data-template="liquid"] body {
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in oklab, var(--primary) 25%, transparent), transparent 30rem),
+    radial-gradient(circle at 88% 22%, rgb(59 130 246 / 0.2), transparent 32rem),
+    linear-gradient(145deg, #020617, #111827 48%, #0f172a);
+}
+
+[data-template="liquid"] .site-header {
+  inset-inline: 0.75rem;
+  top: 0.6rem;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 1.25rem;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.32),
+    0 16px 46px rgb(15 23 42 / 0.16);
+}
+
+[data-template="liquid"] .site-header::after {
+  display: none;
+}
+
+[data-template="liquid"] .route-page {
+  padding-top: 5rem;
+}
+
+[data-template="liquid"] .bg-card,
+[data-template="liquid"] .contact-item,
+[data-template="liquid"] .login-role-card,
+[data-template="liquid"] .home-mini-metric,
+[data-template="liquid"] .home-action-tile,
+[data-template="liquid"] .home-member-row,
+[data-template="liquid"] .home-signal-row,
+[data-template="liquid"] .home-plan-row,
+[data-template="liquid"] .home-motivation-tile,
+[data-template="liquid"] .home-rep-board,
+[data-template="liquid"] .due-row,
+[data-template="liquid"] .attendance-row,
+[data-template="liquid"] .dues-empty,
+[data-template="liquid"] .attendance-board-head,
+[data-template="liquid"] .calorie-info-tile,
+[data-template="liquid"] .macro-row,
+[data-template="liquid"] .diet-card {
+  border-color: rgb(255 255 255 / 0.58);
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.64), rgb(255 255 255 / 0.28)),
+    color-mix(in oklab, var(--card) 72%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.82),
+    inset 0 -1px 0 rgb(255 255 255 / 0.2),
+    0 18px 50px rgb(15 23 42 / 0.12);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+}
+
+.dark[data-template="liquid"] .bg-card,
+.dark[data-template="liquid"] .contact-item,
+.dark[data-template="liquid"] .login-role-card,
+.dark[data-template="liquid"] .home-mini-metric,
+.dark[data-template="liquid"] .home-action-tile,
+.dark[data-template="liquid"] .home-member-row,
+.dark[data-template="liquid"] .home-signal-row,
+.dark[data-template="liquid"] .home-plan-row,
+.dark[data-template="liquid"] .home-motivation-tile,
+.dark[data-template="liquid"] .home-rep-board,
+.dark[data-template="liquid"] .due-row,
+.dark[data-template="liquid"] .attendance-row,
+.dark[data-template="liquid"] .dues-empty,
+.dark[data-template="liquid"] .attendance-board-head,
+.dark[data-template="liquid"] .calorie-info-tile,
+.dark[data-template="liquid"] .macro-row,
+.dark[data-template="liquid"] .diet-card {
+  border-color: rgb(255 255 255 / 0.14);
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.11), rgb(255 255 255 / 0.035)),
+    rgb(15 23 42 / 0.48);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.14),
+    0 20px 56px rgb(0 0 0 / 0.28);
+}
+
+[data-template="liquid"] .theme-customizer-panel {
+  border-color: rgb(255 255 255 / 0.56);
+  background: rgb(255 255 255 / 0.58);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.86),
+    0 24px 70px rgb(15 23 42 / 0.2);
+  backdrop-filter: blur(34px) saturate(160%);
+  -webkit-backdrop-filter: blur(34px) saturate(160%);
+}
+
+.dark[data-template="liquid"] .theme-customizer-panel {
+  border-color: rgb(255 255 255 / 0.14);
+  background: rgb(15 23 42 / 0.64);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  [data-template="liquid"] .bg-card,
+  [data-template="liquid"] .theme-customizer-panel {
+    background: var(--card);
+  }
+}
+
+@media (max-width: 640px) {
+  [data-template="liquid"] .site-header {
+    inset-inline: 0.4rem;
+    top: 0.35rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-block {
+    padding-block: 4rem;
+  }
+}

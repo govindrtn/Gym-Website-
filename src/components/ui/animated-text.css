@@ -1,0 +1,70 @@
+.shimmering-text {
+  display: inline-block;
+  background:
+    linear-gradient(
+      90deg,
+      var(--shimmer-base),
+      var(--shimmer-highlight),
+      var(--shimmer-base)
+    );
+  background-clip: text;
+  background-size: 220% 100%;
+  color: transparent;
+  animation: shimmering-text var(--shimmer-duration) linear var(--shimmer-delay) infinite;
+}
+
+.typing-text {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1em;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 0.08em;
+  height: 0.95em;
+  margin-left: 0.2em;
+  background: currentColor;
+  animation: typing-cursor 900ms steps(2, jump-none) infinite;
+}
+
+.word-rotate {
+  display: inline-block;
+  animation: word-rotate-in 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes shimmering-text {
+  from {
+    background-position: 120% center;
+  }
+
+  to {
+    background-position: -120% center;
+  }
+}
+
+@keyframes typing-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes word-rotate-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmering-text,
+  .typing-cursor,
+  .word-rotate {
+    animation: none;
+  }
+}

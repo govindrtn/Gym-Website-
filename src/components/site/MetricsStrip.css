@@ -1,0 +1,57 @@
+.metrics-strip {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--border);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--card) 92%, #94a3b8) 0%, var(--card) 48%, color-mix(in oklab, var(--card) 92%, #16a34a) 100%);
+}
+
+.metrics-strip::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(22 163 74 / 0.08), transparent);
+  transform: translateX(-100%);
+  animation: metricsSweep 6s ease-in-out infinite;
+}
+
+.metric-cell {
+  position: relative;
+}
+
+.metric-cell::after {
+  position: absolute;
+  inset-inline: 18%;
+  bottom: 0.55rem;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(22 163 74 / 0.46), transparent);
+  opacity: 0;
+  transform: scaleX(0.5);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.metric-cell:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@keyframes metricsSweep {
+  0%,
+  40% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metrics-strip::before {
+    animation: none;
+  }
+}

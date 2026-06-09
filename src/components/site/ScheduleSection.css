@@ -1,0 +1,101 @@
+.schedule-section {
+  position: relative;
+  overflow: hidden;
+  background: #09090b;
+  color: #ffffff;
+}
+
+.schedule-section::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 62% 35%, #000, transparent 65%);
+}
+
+.schedule-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.06);
+  color: #ffffff;
+  box-shadow: none;
+  animation: schedulePanelIn 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.schedule-shift-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.schedule-shift-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 0.06);
+  padding: 0.875rem;
+  animation: schedulePanelIn 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.schedule-shift-card:nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.schedule-card::before {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(52 211 153 / 0.8), transparent);
+  animation: scheduleSweep 4.2s ease-in-out infinite;
+}
+
+.schedule-row {
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.schedule-row:hover {
+  background: rgb(255 255 255 / 0.045);
+  transform: translateX(3px);
+}
+
+@keyframes schedulePanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scheduleSweep {
+  0%,
+  35% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .schedule-card,
+  .schedule-shift-card,
+  .schedule-card::before {
+    animation: none;
+  }
+}

@@ -1,0 +1,73 @@
+.program-card {
+  position: relative;
+  overflow: hidden;
+  animation: techCardIn 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.program-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(120deg, transparent, rgb(22 163 74 / 0.08), transparent);
+  transform: translateX(-120%);
+  transition: transform 460ms ease;
+}
+
+.program-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.program-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--primary) 38%, var(--border));
+  box-shadow: 0 18px 45px rgb(15 23 42 / 0.08), 0 0 30px rgb(22 163 74 / 0.08);
+}
+
+.program-card:hover::before {
+  transform: translateX(120%);
+}
+
+.program-card-cta svg {
+  transition: transform 180ms ease;
+}
+
+.program-card:hover .program-card-cta svg {
+  transform: translateX(3px);
+}
+
+.program-card:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.program-card:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.program-card:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+@keyframes techCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .program-card {
+    animation: none;
+  }
+}

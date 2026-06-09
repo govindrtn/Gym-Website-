@@ -1,0 +1,53 @@
+.ui-progress {
+  position: relative;
+  height: 0.375rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--app-progress-track);
+}
+
+.ui-progress-indicator {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--app-progress-fill);
+  box-shadow: 0 0 18px var(--app-progress-glow);
+  transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ui-progress-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-progress-circle svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.ui-progress-circle-track,
+.ui-progress-circle-indicator {
+  fill: none;
+  stroke: currentColor;
+}
+
+.ui-progress-circle-track {
+  color: var(--app-progress-track);
+}
+
+.ui-progress-circle-indicator {
+  color: var(--primary);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ui-progress-circle-content {
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  font-weight: 700;
+}

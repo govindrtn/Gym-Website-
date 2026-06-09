@@ -1,0 +1,233 @@
+.login-page {
+  position: relative;
+  min-height: calc(100svh - 4rem);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgb(248 250 252 / 0.96), rgb(248 250 252 / 0.9), rgb(15 23 42 / 0.36)),
+    radial-gradient(circle at 18% 18%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 28%),
+    url("/assets/gym-hero.png"),
+    linear-gradient(180deg, var(--app-section-light-start), var(--app-section-light-end));
+  background-position:
+    center,
+    18% 18%,
+    center right,
+    center;
+  background-repeat: no-repeat;
+  background-size:
+    cover,
+    auto,
+    cover,
+    cover;
+}
+
+.login-page::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(rgb(15 23 42 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(15 23 42 / 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+.login-shell {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.login-copy > * {
+  animation: loginPanelIn 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.login-copy > :nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.login-copy > :nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.login-copy > :nth-child(4) {
+  animation-delay: 260ms;
+}
+
+.login-role-grid {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+.login-role-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  color: var(--card-foreground);
+  padding: 1rem;
+  text-align: left;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.login-role-card:hover,
+.login-role-card.is-active {
+  border-color: rgb(22 163 74 / 0.42);
+  box-shadow: 0 18px 42px rgb(15 23 42 / 0.09);
+  transform: translateY(-2px);
+}
+
+.login-role-card.is-active {
+  background: color-mix(in oklab, var(--accent) 74%, var(--card));
+}
+
+.login-role-icon,
+.login-lock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: var(--primary);
+  box-shadow: inset 0 0 0 1px rgb(34 197 94 / 0.12), 0 12px 26px rgb(22 163 74 / 0.12);
+}
+
+.login-role-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.login-role-title,
+.login-role-detail {
+  display: block;
+}
+
+.login-role-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.login-role-detail {
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.login-card {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 22px 60px rgb(15 23 42 / 0.12);
+  backdrop-filter: blur(16px);
+  animation: loginPanelIn 680ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+}
+
+.login-card::before {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(22 163 74 / 0.76), transparent);
+}
+
+.login-lock {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.login-error {
+  border: 1px solid color-mix(in oklab, var(--destructive) 42%, var(--border));
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--destructive) 12%, var(--card));
+  padding: 0.7rem;
+  color: var(--destructive);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.login-password-help {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.25rem;
+}
+
+.login-password-help a {
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.login-password-help a:hover {
+  text-decoration: underline;
+}
+
+.login-demo-actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+@keyframes loginPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .login-role-grid,
+  .login-demo-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .login-shell {
+    grid-template-columns: minmax(0, 1fr) minmax(24rem, 0.5fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .login-page {
+    background:
+      linear-gradient(180deg, rgb(248 250 252 / 0.97), rgb(248 250 252 / 0.9), rgb(15 23 42 / 0.28)),
+      radial-gradient(circle at 18% 18%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 28%),
+      url("/assets/gym-hero.png"),
+      linear-gradient(180deg, var(--app-section-light-start), var(--app-section-light-end));
+    background-position:
+      center,
+      18% 18%,
+      64% center,
+      center;
+    background-repeat: no-repeat;
+    background-size:
+      cover,
+      auto,
+      cover,
+      cover;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-copy > *,
+  .login-card {
+    animation: none;
+  }
+
+  .login-role-card:hover {
+    transform: none;
+  }
+}

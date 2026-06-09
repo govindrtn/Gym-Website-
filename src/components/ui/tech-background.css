@@ -1,0 +1,111 @@
+.tech-grid-background {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.tech-grid-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.11) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+}
+
+.tech-grid-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, transparent, rgb(34 197 94 / 0.16), transparent);
+  transform: translateX(-110%);
+  animation: tech-grid-scan 7s ease-in-out infinite;
+}
+
+.tech-beam {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgb(34 197 94 / 0.85), rgb(148 163 184 / 0.85), transparent);
+  box-shadow: 0 0 20px rgb(34 197 94 / 0.4);
+  opacity: 0;
+  animation-delay: var(--beam-delay);
+}
+
+.tech-beam-horizontal {
+  top: var(--beam-offset);
+  left: -10%;
+  width: 7rem;
+  height: 2px;
+  animation: tech-beam-horizontal 6s linear infinite;
+}
+
+.tech-beam-vertical {
+  top: -10%;
+  left: var(--beam-offset);
+  width: 2px;
+  height: 7rem;
+  animation: tech-beam-vertical 7s linear infinite;
+}
+
+.tech-grid-content {
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes tech-grid-scan {
+  0%,
+  28% {
+    transform: translateX(-110%);
+  }
+
+  72%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+@keyframes tech-beam-horizontal {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  12%,
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(120vw);
+  }
+}
+
+@keyframes tech-beam-vertical {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  12%,
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(120vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-grid-scan,
+  .tech-beam {
+    animation: none;
+  }
+}

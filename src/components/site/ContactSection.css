@@ -1,0 +1,115 @@
+.contact-card {
+  position: relative;
+  overflow: hidden;
+  animation: contactPanelIn 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.contact-card::before {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(22 163 74 / 0.72), transparent);
+}
+
+.contact-form {
+  position: relative;
+}
+
+.contact-item {
+  max-width: 100%;
+}
+
+.contact-item-value {
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.contact-whatsapp-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.contact-textarea {
+  min-height: 7rem;
+  resize: none;
+  border: 1px solid var(--input);
+  border-radius: 0.375rem;
+  background: var(--background);
+  padding: 0.5rem 0.75rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.contact-textarea::placeholder {
+  color: var(--muted-foreground);
+}
+
+.contact-textarea:focus-visible {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 25%, transparent);
+}
+
+.contact-success {
+  border: 1px solid color-mix(in oklab, var(--primary) 34%, var(--border));
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--accent) 78%, var(--card));
+  padding: 0.75rem;
+  color: var(--accent-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: successIn 260ms ease both;
+}
+
+.contact-success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 0.75rem;
+}
+
+.contact-success-actions a {
+  border-color: color-mix(in oklab, var(--primary) 36%, var(--border));
+  background: color-mix(in oklab, var(--card) 86%, var(--accent));
+  color: var(--foreground);
+}
+
+@keyframes contactPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-card,
+  .contact-success {
+    animation: none;
+  }
+}
