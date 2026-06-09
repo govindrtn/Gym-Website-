@@ -19,6 +19,7 @@ const allowedOrigins = [
   ...(process.env.CLIENT_ORIGIN || "").split(","),
   "http://127.0.0.1:5173",
   "http://localhost:5173",
+  "https://govindrtn.github.io",
 ].map((origin) => origin.trim().replace(/\/$/, "")).filter(Boolean);
 
 app.use(
